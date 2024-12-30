@@ -1,0 +1,27 @@
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  background-color: #f9f9f9; /* 배경색 */
+  padding: 10px 16px; /* 상하 좌우 여백 */
+  border-bottom: 1px solid #ddd; /* 아래쪽 경계선 */
+  font-family: Arial, sans-serif;
+  box-sizing: border-box
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  width: 40px; /* 로고 이미지 크기 */
+  height: 40px;
+  margin-right: 10px;
+}
+
+.page-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333; /* 텍스트 색상 */
+}

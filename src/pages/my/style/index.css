@@ -1,0 +1,85 @@
+.my-page {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
+
+.profile-section {
+  width: 100%;
+  padding: 12px;
+
+  display: flex;
+  align-items: center;
+
+  background-color: #f9f9f9;
+}
+
+.profile-info {
+  padding: 0px 16px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.profile-icon {
+  margin-right: 15px;
+}
+
+.profile-text .user-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.profile-text .user-id {
+  font-size: 14px;
+  color: #666;
+}
+
+.menu-section {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  background-color: #f9f9f9;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 16px 16px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  text-decoration: none;
+  
+  color: #333;
+  border-bottom: 1px solid #dddddd;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item:hover {
+  background-color: #f4f4f4;
+}
+
+.footer {
+  margin-top: 20px;
+
+  text-align: center;
+  
+  font-size: 12px;
+  color: #aaa;
+}
