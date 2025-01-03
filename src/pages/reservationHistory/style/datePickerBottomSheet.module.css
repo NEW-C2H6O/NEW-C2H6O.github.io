@@ -1,0 +1,50 @@
+.container {
+  width: 81.5vw;
+  height: 41.85svh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.yearMonthContainer {
+  font-size: 2.3svh;
+
+  width: 53.71vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar {
+  height: 23.9svh;
+  width: 81.5vw;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendarRow {
+  width: 81.5vw;
+  display: flex;
+  justify-content: space-between;
+}
+
+.submitButton {
+  width: 81.5vw;
+  height: 5.18svh;
+  background-color: #017050;
+
+  border-radius: 1.38svh;
+
+  font-size: 2.3svh;
+  color: white;
+  font-weight: bold;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
