@@ -7,7 +7,7 @@ const defaultState = {
   isOpen: false,
 };
 
-const useDatePickerStore = create((set, get) => ({
+const useReservationHistoryDatePickerStore = create((set, get) => ({
   ...defaultState,
 
   //actions
@@ -27,4 +27,4 @@ const useDatePickerStore = create((set, get) => ({
   setDate: (date) => set({ date }),
 }));
 
-export { useDatePickerStore };
+export { useReservationHistoryDatePickerStore };

@@ -6,7 +6,7 @@ import { CalendarCell } from "./calenderCell";
 
 import { ReactComponent as LeftIcon } from "shared/assets/icons/navigate/left.svg";
 import { ReactComponent as RightIcon } from "shared/assets/icons/navigate/right.svg";
-import { useDatePickerStore, useReservationHistoryStore } from "features";
+import { useReservationHistoryDatePickerStore, useReservationHistoryStore } from "features";
 
 function getDays(year, month) {
   const weeks = Math.ceil(
@@ -35,7 +35,7 @@ function DatePickerBottomSheet() {
     increaseMonth,
     decreaseMonth,
     setDate: setSelectedDate,
-  } = useDatePickerStore();
+  } = useReservationHistoryDatePickerStore();
   const { setDate } = useReservationHistoryStore();
 
   return (
