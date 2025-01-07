@@ -2,11 +2,11 @@ import { BottomSheet } from "widgets";
 import styles from "../style/filterBottomSheet.module.css";
 import { FilterSelector } from "./filterSelector";
 import {
-  inclusionOptions,
-  ottPlatforms,
-  ottPlatformsImageSrc,
-  ottProfiles,
-  sortOptions,
+  INCLUSION_OPTIONS,
+  OTT_PLATFORMS,
+  OTT_PLATFORMS_IMAGE_SRC,
+  OTT_PROFILES,
+  SORT_OPTIONS,
 } from "shared";
 import { useReservationHistoryFilterStore } from "features";
 
@@ -36,15 +36,15 @@ function FilterBottomSheet() {
         <div className={styles.container}>
           <FilterSelector
             title={`OTT 플랫폼`}
-            items={ottPlatforms}
+            items={OTT_PLATFORMS}
             selectedItems={selectedOttPlatforms}
             toggleSelectedItem={toggleSelectedOttPlatform}
-            iconSrc={ottPlatformsImageSrc}
+            iconSrc={OTT_PLATFORMS_IMAGE_SRC}
           />
           {selectedOttPlatform ? (
             <FilterSelector
               title={`프로필`}
-              items={selectedOttPlatform ? ottProfiles[selectedOttPlatform] : []}
+              items={selectedOttPlatform ? OTT_PROFILES[selectedOttPlatform] : []}
               selectedItems={selectedOttProfiles}
               toggleSelectedItem={toggleSelectedOttProfile}
               iconSrc={null}
@@ -52,21 +52,21 @@ function FilterBottomSheet() {
           ) : null}
           <FilterSelector
             title={`정렬`}
-            items={sortOptions}
+            items={SORT_OPTIONS}
             selectedItems={selectedSortOptions}
             toggleSelectedItem={toggleSelectedSortOption}
             iconSrc={null}
           />
           <FilterSelector
             title={`지난 예약`}
-            items={inclusionOptions}
+            items={INCLUSION_OPTIONS}
             selectedItems={selectedPreviousInclusion}
             toggleSelectedItem={toggleSelectedPreviousInclusion}
             iconSrc={null}
           />
           <FilterSelector
             title={`내 예약`}
-            items={inclusionOptions}
+            items={INCLUSION_OPTIONS}
             selectedItems={selectedMyInclusion}
             toggleSelectedItem={toggleSelectedMyInclusion}
             iconSrc={null}
