@@ -8,7 +8,7 @@ import {
   OTT_PROFILES,
   SORT_OPTIONS,
 } from "shared";
-import { useReservationHistoryFilterStore } from "features";
+import { useReservationHistoryFilterStore, useReservationHistoryStore } from "features";
 
 function FilterBottomSheet() {
   const {
@@ -27,6 +27,8 @@ function FilterBottomSheet() {
     toggleSelectedPreviousInclusion,
     toggleSelectedMyInclusion,
   } = useReservationHistoryFilterStore();
+
+  const { setFilter } = useReservationHistoryStore();
 
   return (
     <BottomSheet
@@ -71,7 +73,29 @@ function FilterBottomSheet() {
             toggleSelectedItem={toggleSelectedMyInclusion}
             iconSrc={null}
           />
-          <div className={styles.submitButton} onClick={() => {}}>{`적용하기`}</div>
+          <div
+            className={styles.submitButton}
+            onClick={() => {
+              setFilter({
+                ottPlatforms: Array.from({ length: OTT_PLATFORMS.length }, (v, i) => i).filter(
+                  (v, i) => selectedOttPlatforms[i]
+                ),
+                ottProfiles: selectedOttPlatform
+                  ? Array.from(
+                      { length: OTT_PROFILES[selectedOttPlatform].length },
+                      (v, i) => i
+                    ).filter((v, i) => selectedOttProfiles[i])
+                  : [],
+                sortOption:
+                  SORT_OPTIONS.findIndex((v, i) => selectedSortOptions[i]) === -1
+                    ? null
+                    : SORT_OPTIONS.findIndex((v, i) => selectedSortOptions[i]),
+                isPreviousIncluded: selectedPreviousInclusion[0] === true,
+                isMyReservationIncluded: selectedMyInclusion[0] === true,
+              });
+              closeFilter();
+            }}
+          >{`적용하기`}</div>
         </div>
       )}
     />
