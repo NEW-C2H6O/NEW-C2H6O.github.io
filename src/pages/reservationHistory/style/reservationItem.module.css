@@ -1,0 +1,50 @@
+.container {
+  width: 100vw;
+  height: 12.11svh;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 2.99svh 5vw;
+  box-sizing: border-box;
+
+  border-bottom: solid 0.11svh #dddddd;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100%;
+
+  .name {
+    font-size: 2.3svh;
+    color: #000;
+  }
+
+  .infoRow {
+    display: flex;
+    align-items: center;
+
+    .icon {
+      height: 1.5svh;
+      aspect-ratio: 1;
+
+      margin-right: 2.25vw;
+
+      border-radius: 50%;
+    }
+
+    .infoText {
+      font-size: 1.84svh;
+      color: #000;
+    }
+  }
+}
+
+.editButton {
+  height: 1.84svh;
+  aspect-ratio: 1;
+}
