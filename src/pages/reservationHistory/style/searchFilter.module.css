@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  padding: 0 6vw;
+  box-sizing: border-box;
+
+  display: flex;
+
+  overflow: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+.item {
+  padding: 1svh 3vw;
+  border-radius: 1.8svh;
+  font-size: 1.6svh;
+  margin-right: 2.5vw;
+}
+
+.selected {
+  border: solid 0.11svh #dddddd;
+  background-color: #dddddd;
+  color: #3b3b3b;
+}
+.notSelected {
+  border: solid 0.11svh #dddddd;
+  color: #616161;
+}

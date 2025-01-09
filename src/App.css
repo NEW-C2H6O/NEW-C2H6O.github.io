@@ -17,7 +17,7 @@ body {
   border: black;
 
   width: 100vw; /* 전체 화면 너비 */
-  height: 100vh; /* 전체 화면 높이 */
+  height: 100svh; /* 전체 화면 높이 */
   max-width: 500px; /* 최대 너비 제한 */
 
   aspect-ratio: 9 / 16;

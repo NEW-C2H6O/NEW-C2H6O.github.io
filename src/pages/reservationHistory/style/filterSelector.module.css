@@ -1,0 +1,47 @@
+.container {
+  width: 81.5vw;
+  height: 8.65svh;
+  margin-bottom: 4.03svh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.title {
+  font-size: 2.3svh;
+  font-weight: bold;
+  color: #000;
+}
+
+.itemRow {
+  display: flex;
+}
+
+.button {
+  padding: 0.92svh 3.25vw;
+  margin-right: 3.75vw;
+  border-radius: 1.38svh;
+
+  border: solid 0.3vw #017050;
+
+  display: flex;
+  align-items: center;
+
+  .icon {
+    height: 1.84svh;
+    aspect-ratio: 1;
+
+    margin-right: 1vw;
+
+    border-radius: 50%;
+  }
+
+  .text {
+    font-size: 1.73svh;
+    font-weight: normal;
+
+    line-height: 1.73svh;
+  }
+}
