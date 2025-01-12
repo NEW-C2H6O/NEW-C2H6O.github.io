@@ -89,3 +89,64 @@ export const getOtts = () => {
     },
   ];
 };
+
+export const getSeats = () => {
+  return [
+    {
+      ottId: 1,
+      name: '왓챠',
+      profile: [
+        {
+          profileId: 3,
+          name: '3번',
+        },
+        {
+          profileId: 4,
+          name: '4번',
+        },
+      ],
+    },
+    {
+      ottId: 2,
+      name: '웨이브',
+      profile: [
+        {
+          profileId: 5,
+          name: '1번',
+        },
+        {
+          profileId: 6,
+          name: '2번',
+        },
+        {
+          profileId: 7,
+          name: '3번',
+        },
+      ],
+    },
+    {
+      ottId: 3,
+      name: '티빙',
+      profile: [
+        {
+          profileId: 9,
+          name: '1번',
+        },
+      ],
+    },
+    {
+      ottId: 4,
+      name: '쿠팡플레이',
+      profile: [
+        {
+          profileId: 13,
+          name: '1번',
+        },
+        {
+          profileId: 15,
+          name: '3번',
+        },
+      ],
+    },
+  ];
+};

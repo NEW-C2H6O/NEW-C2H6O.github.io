@@ -1,7 +1,11 @@
 import './style/index.css';
 import { Navbar } from '../../widgets/index.js';
+import { getSeats } from 'entities/thuckFuntion';
 
 export default function SeatSearchPage() {
+  const seat = getSeats();
+
+
   return (
     <div className='seat-search-page'>
       <Navbar pageName='OTT 검색' />
