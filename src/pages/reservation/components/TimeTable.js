@@ -1,4 +1,4 @@
-import './style/index.css';
+import '../style/index.css';
 import React, { useMemo, useState } from 'react';
 import { useTable } from 'react-table';
 
@@ -63,45 +63,44 @@ function SelectableTable({ columns, data, onSelectTimes }) {
   };
 
   return (
-      <table
-        {...getTableProps()}
-        onMouseUp={stopSelecting}
-        onMouseLeave={stopSelecting}>
+    <table
+      {...getTableProps()}
+      onMouseUp={stopSelecting}
+      onMouseLeave={stopSelecting}>
+      <thead>
+        {headerGroups.map((headerGroup) => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map((column) => (
+              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+            ))}
+          </tr>
+        ))}
+      </thead>
 
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+      <tbody {...getTableBodyProps()} className='table-body'>
+        {rows.map((row, i) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()}>
+              {row.cells.map((cell) => (
+                <td
+                  className='noselect'
+                  {...cell.getCellProps()}
+                  onMouseDown={() => startSelecting(i, cell.column.id)}
+                  onMouseOver={() => selectCell(i, cell.column.id)}
+                  style={{
+                    background: isSelected(i, cell.column.id)
+                      ? '#9DD7C6'
+                      : undefined,
+                  }}>
+                  {cell.render('Cell')}
+                </td>
               ))}
             </tr>
-          ))}
-        </thead>
-
-        <tbody {...getTableBodyProps()} className='table-body'>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <td
-                    className='noselect'
-                    {...cell.getCellProps()}
-                    onMouseDown={() => startSelecting(i, cell.column.id)}
-                    onMouseOver={() => selectCell(i, cell.column.id)}
-                    style={{
-                      background: isSelected(i, cell.column.id)
-                        ? '#9DD7C6'
-                        : undefined,
-                    }}>
-                    {cell.render('Cell')}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+          );
+        })}
+      </tbody>
+    </table>
   );
 }
 
