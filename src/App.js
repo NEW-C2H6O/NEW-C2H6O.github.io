@@ -6,8 +6,9 @@ import {
   ReservationPage,
   ReservationHistoryPage,
   SeatSearchPage,
-} from './pages/index.js';
-import { Footer } from './widgets/index.js';
+  CodeInputPage,
+} from "./pages/index.js";
+import { Footer } from "./widgets/index.js";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -24,14 +25,12 @@ function App() {
   return (
     <div className='App'>
       <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route
-          path='/reservation-history'
-          element={<ReservationHistoryPage />}
-        />
-        <Route path='/reservation' element={<ReservationPage />} />
-        <Route path='/seat-search' element={<SeatSearchPage />} />
-        <Route path='/my' element={<MyPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/reservation-history" element={<ReservationHistoryPage />} />
+        <Route path="/reservation" element={<ReservationPage />} />
+        <Route path="/seat-search" element={<SeatSearchPage />} />
+        <Route path="/my" element={<MyPage />} />
+        <Route path="/my/code-input" element={<CodeInputPage />} />
       </Routes>
       <Footer />
     </div>
