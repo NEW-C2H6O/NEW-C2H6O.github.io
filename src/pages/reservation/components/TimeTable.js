@@ -7,12 +7,22 @@ function TimeTable({ onSelectTimes }) {
     () =>
       Array(24)
         .fill()
-        .map(() => Array(6).fill('')),
+        .map((_, i) => ({
+          label: `${String(i).padStart(2, '0')}`, // 레이블 데이터 추가
+          t0: '',
+          t1: '',
+          t2: '',
+          t3: '',
+          t4: '',
+          t5: '',
+          t6: '',
+        })),
     [],
   );
 
   const columns = useMemo(
     () => [
+      { Header: '', accessor: 'label' },
       { Header: '00', accessor: 't0' },
       { Header: '10', accessor: 't1' },
       { Header: '20', accessor: 't2' },
@@ -41,11 +51,13 @@ function SelectableTable({ columns, data, onSelectTimes }) {
   const [selectedCells, setSelectedCells] = useState([]);
 
   const startSelecting = (rowIndex, colId) => {
+    if (colId === 'label') return;
     setIsSelecting(true);
     setSelectedCells((prev) => [...prev, { rowIndex, colId }]);
   };
 
   const selectCell = (rowIndex, colId) => {
+    if (colId === 'label') return;
     if (isSelecting && !isSelected(rowIndex, colId)) {
       setSelectedCells((prev) => [...prev, { rowIndex, colId }]);
       onSelectTimes(selectedCells);
