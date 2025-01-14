@@ -1,4 +1,4 @@
-import '../style/index.css';
+import '../style/timeTable.css';
 import React, { useMemo, useState } from 'react';
 import { useTable } from 'react-table';
 
@@ -22,7 +22,7 @@ function TimeTable({ onSelectTimes }) {
 
   const columns = useMemo(
     () => [
-      { Header: '', accessor: 'label' },
+      { Header: 'h\\m', accessor: 'label' },
       { Header: '00', accessor: 't0' },
       { Header: '10', accessor: 't1' },
       { Header: '20', accessor: 't2' },
@@ -75,46 +75,54 @@ function SelectableTable({ columns, data, onSelectTimes }) {
   };
 
   return (
-    <table
-      {...getTableProps()}
-      onMouseUp={stopSelecting}
-      onMouseLeave={stopSelecting}
-    >
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => (
-                <td
-                  className='noselect'
-                  {...cell.getCellProps()}
-                  onMouseDown={() => startSelecting(i, cell.column.id)}
-                  onMouseOver={() => selectCell(i, cell.column.id)}
-                  style={{
-                    height: '30px',
-                    background: isSelected(i, cell.column.id)
-                      ? '#9DD7C6'
-                      : undefined,
-                  }}>
-                  {cell.render('Cell')}
-                </td>
+    <div className='table-section'>
+      <table className='header-table' {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
               ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+      </table>
+
+      <div
+        style={{
+          maxHeight: '450px', // 원하는 높이로 설정
+          overflowY: 'auto', // 세로 스크롤
+        }}>
+        <table
+          {...getTableProps()}
+          onMouseUp={stopSelecting}
+          onMouseLeave={stopSelecting}>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => (
+                    <td
+                      className='noselect'
+                      {...cell.getCellProps()}
+                      onMouseDown={() => startSelecting(i, cell.column.id)}
+                      onMouseOver={() => selectCell(i, cell.column.id)}
+                      style={{
+                        background: isSelected(i, cell.column.id)
+                          ? '#9DD7C6'
+                          : undefined,
+                      }}>
+                      {cell.render('Cell')}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 
