@@ -7,7 +7,7 @@ function TimeTable({ onSelectTimes }) {
     () =>
       Array(24)
         .fill()
-        .map(() => Array(6).fill(' ')),
+        .map(() => Array(6).fill('')),
     [],
   );
 
@@ -89,6 +89,7 @@ function SelectableTable({ columns, data, onSelectTimes }) {
                   onMouseDown={() => startSelecting(i, cell.column.id)}
                   onMouseOver={() => selectCell(i, cell.column.id)}
                   style={{
+                    height: '30px',
                     background: isSelected(i, cell.column.id)
                       ? '#9DD7C6'
                       : undefined,
