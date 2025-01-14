@@ -1,0 +1,11 @@
+.seat-info {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+
+  padding: 20px;
+  box-sizing: border-box;
+}

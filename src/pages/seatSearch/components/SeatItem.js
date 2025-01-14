@@ -1,13 +1,11 @@
-function SeatItem({seat}) {
+function SeatItem({ seat }) {
   return (
     <li className='seat-item' key={seat.seatId}>
-      <div className='seat-info'>
-        <span> {seat.ott} {' · '} </ span>
+      <span> {seat.name} {' · '} </ span>
 
-        {seat.profile.map((profile) =>
-          <span> {profile.name} </ span>
-        )}
-      </div>
+      {seat.profile.map((profile) =>
+        <span> {profile.name} </ span>
+      )}
     </li>
   );
 }
