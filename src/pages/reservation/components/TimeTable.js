@@ -42,7 +42,7 @@ function SelectableTable({ columns, data, onSelectTimes }) {
 
   const startSelecting = (rowIndex, colId) => {
     setIsSelecting(true);
-    setSelectedCells([{ rowIndex, colId }]);
+    setSelectedCells((prev) => [...prev, { rowIndex, colId }]);
   };
 
   const selectCell = (rowIndex, colId) => {
@@ -66,7 +66,8 @@ function SelectableTable({ columns, data, onSelectTimes }) {
     <table
       {...getTableProps()}
       onMouseUp={stopSelecting}
-      onMouseLeave={stopSelecting}>
+      onMouseLeave={stopSelecting}
+    >
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -77,7 +78,7 @@ function SelectableTable({ columns, data, onSelectTimes }) {
         ))}
       </thead>
 
-      <tbody {...getTableBodyProps()} className='table-body'>
+      <tbody {...getTableBodyProps()}>
         {rows.map((row, i) => {
           prepareRow(row);
           return (
