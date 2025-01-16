@@ -1,3 +1,4 @@
+import '../style/index.css'
 import React from 'react';
 import Select from 'react-select';
 
@@ -5,7 +6,8 @@ const selectBoxStyle = {
   container: (provided) => ({
     ...provided,
     width: '100%',
-    borderRadius: '8',
+    border: 'none',
+    borderRadius: '8px',
   }),
 };
 
@@ -43,6 +45,7 @@ function GroupedDropdown({ groupedOptions, onSelectedOption }) {
       placeholder='선택'
       styles={selectBoxStyle}
       formatGroupLabel={formatGroupLabel}
+      className='grouped-dropdown'
     />
   );
 }
