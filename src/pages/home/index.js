@@ -1,12 +1,7 @@
-import './style/index.css';
-import { Navbar } from '../../widgets/index.js';
+import "./style/index.css";
 
 function HomePage() {
-  return (
-    <div className={'home-page'}>
-      <Navbar pageName='HOME' />
-    </div>
-  );
+  return <div className={"home-page"}></div>;
 }
 
 export { HomePage };

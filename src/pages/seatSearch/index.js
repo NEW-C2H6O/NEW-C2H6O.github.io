@@ -1,12 +1,7 @@
-import './style/index.css';
-import { Navbar } from '../../widgets/index.js';
+import "./style/index.css";
 
 export default function SeatSearchPage() {
-  return (
-    <div className='seat-search-page'>
-      <Navbar pageName='OTT 검색' />
-    </div>
-  );
+  return <div className="seat-search-page"></div>;
 }
 
 export { SeatSearchPage };

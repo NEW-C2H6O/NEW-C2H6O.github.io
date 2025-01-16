@@ -8,7 +8,7 @@ import {
   SeatSearchPage,
   CodeInputPage,
 } from "./pages/index.js";
-import { Footer } from "./widgets/index.js";
+import { AppBar, NavigationBar } from "./widgets/index.js";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -26,6 +26,7 @@ function App() {
 
   return (
     <div className="App" style={{ height: height }}>
+      <AppBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/reservation-history" element={<ReservationHistoryPage />} />
@@ -34,7 +35,7 @@ function App() {
         <Route path="/my" element={<MyPage />} />
         <Route path="/my/code-input" element={<CodeInputPage />} />
       </Routes>
-      <Footer />
+      <NavigationBar />
     </div>
   );
 }

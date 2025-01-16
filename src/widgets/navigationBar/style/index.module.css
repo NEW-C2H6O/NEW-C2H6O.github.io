@@ -1,0 +1,35 @@
+.container {
+  position: absolute;
+  bottom: 0;
+
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
+  height: 60px;
+  width: 100%;
+  padding: 10px 22px 6px 22px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.navButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  text-decoration: none;
+
+  .txtDefault {
+    font-size: 0.875rem;
+    color: #616161;
+  }
+
+  .txtSelected {
+    font-size: 0.875rem;
+    color: #616161;
+    font-weight: bold;
+    color: #033f29;
+  }
+}

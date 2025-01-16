@@ -1,14 +1,11 @@
 import styles from "./style/index.module.css";
 import { Link } from "react-router-dom";
-import { Navbar } from "../../widgets/index";
 
 import { ReactComponent as RightIcon } from "shared/assets/icons/navigate/right.svg";
 
 function MyPage() {
   return (
     <div className={styles.container}>
-      <Navbar pageName="마이페이지" />
-
       <section className={styles.profileSection}>
         <div className={styles.profileIcon} />
         <div style={{ width: "12px" }} />

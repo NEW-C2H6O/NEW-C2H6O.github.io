@@ -1,5 +1,4 @@
 import styles from "./style/index.module.css";
-import { Navbar } from "../../widgets/index.js";
 import { DatePickerBottomSheet } from "./componets/datePickerBottomSheet.jsx";
 
 import { ReactComponent as CalenderIcon } from "shared/assets/icons/calendar.svg";
@@ -17,7 +16,6 @@ function ReservationHistoryPage() {
     <div className={styles.container}>
       <DatePickerBottomSheet />
       <FilterBottomSheet />
-      <Navbar pageName="장부 조회" />
       <div style={{ height: "1.71svh" }} />
       <div
         className={styles.searchDate}
