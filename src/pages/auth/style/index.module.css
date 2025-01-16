@@ -44,6 +44,8 @@
   background-color: #fee500;
   border-radius: 2px;
 
+  text-decoration: none;
+
   .logo {
     width: 18px;
   }
