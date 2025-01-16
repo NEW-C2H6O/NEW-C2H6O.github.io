@@ -4,3 +4,4 @@ export * from "./reservation/index";
 export * from "./reservationHistory/index";
 export * from "./seatSearch/index";
 export * from "./codeInput/index";
+export * from "./auth/index";
