@@ -1,7 +1,7 @@
-import './style/index.css';
-import { getOtts } from '../../entities/thuckFuntion.js';
-import { Navbar, SingleDropDown } from '../../widgets/index.js';
-import { useState } from 'react';
+import "./style/index.css";
+import { getOtts } from "../../entities/thuckFuntion.js";
+import { SingleDropDown } from "../../widgets/index.js";
+import { useState } from "react";
 
 function ReservationPage() {
   const otts = getOtts();
@@ -15,19 +15,17 @@ function ReservationPage() {
   console.log(selectedOtt);
 
   return (
-    <div className='reservation-page'>
-      <Navbar pageName='예약' />
-
+    <div className="reservation-page">
       <div>
         <SingleDropDown
-          label='OTT'
-          placeholder='선택'
+          label="OTT"
+          placeholder="선택"
           dropdownItems={ottInfo}
           setSelected={setSelectedOtt}
         />
         <SingleDropDown
-          label='프로필'
-          placeholder='선택'
+          label="프로필"
+          placeholder="선택"
           dropdownItems={otts
             .find((ott) => ott.ottId === selectedOtt)
             .profile.map((profile) => ({

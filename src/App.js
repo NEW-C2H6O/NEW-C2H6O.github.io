@@ -26,6 +26,7 @@ function App() {
 
   return (
     <div className="App" style={{ height: height }}>
+      <AppBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/reservation-history" element={<ReservationHistoryPage />} />

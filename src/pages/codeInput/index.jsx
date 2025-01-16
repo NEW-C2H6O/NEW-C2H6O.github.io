@@ -1,5 +1,4 @@
 import styles from "./style/index.module.css";
-import { Navbar } from "../../widgets/index";
 import { useRef, useState } from "react";
 
 function CodeInputPage() {
@@ -23,7 +22,6 @@ function CodeInputPage() {
 
   return (
     <div className={styles.container}>
-      <Navbar pageName="코드 입력" />
       <div style={{ height: "32px" }} />
       <img className={styles.logo} src="/green_logo.png" />
       <div style={{ height: "22px" }} />
