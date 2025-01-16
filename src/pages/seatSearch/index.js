@@ -91,7 +91,7 @@ function SeatSearchPage() {
         </button>
       </div>
 
-      <div className='search-result'>
+      <div className='search-list'>
         {seats.map((seat) => {
           return <SeatItem seat={seat} />;
         })}
