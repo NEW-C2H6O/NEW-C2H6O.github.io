@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { FilterBottomSheet } from './components/FilterBottomSheet';
 import { SeatItem } from './components/SeatItem';
 import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { SearchButton } from './components/SearchButton';
 
 function formatProfileOptions(otts) {
   return otts.map((ott) => ({
@@ -20,18 +22,25 @@ function formatProfileOptions(otts) {
   }));
 }
 
-function formatButtonText(date, start, end, otts) {
+function formatDate(date) {
   const pad = (num) => num.toString().padStart(2, '0');
-
   const month = pad(date.getMonth() + 1);
   const day = pad(date.getDate());
 
+  return `${month}/${day}`;
+}
+
+function formatTimePair(start, end) {
   const formatTime = (momentObj) => momentObj.format('HH:mm');
 
+  return `${formatTime(start)}-${formatTime(end)}`;
+}
+
+function formatOtt(otts) {
   const ottName = otts.ottName;
   const profileNum = otts.value;
 
-  return `${month}/${day} | ${formatTime(start)}-${formatTime(end)} | ${ottName} ${profileNum}번`;
+  return `${ottName} ${profileNum}번`;
 }
 
 function SeatSearchPage() {
@@ -86,9 +95,12 @@ function SeatSearchPage() {
       />
       <Navbar pageName='OTT 검색' />
       <div className='search-section'>
-        <button className='search-button' onClick={handleFilterButtonClick}>
-          {formatButtonText(date, start, end, ott)}
-        </button>
+        <SearchButton
+          date={formatDate(date)}
+          time={formatTimePair(start, end)}
+          ott={formatOtt(ott)}
+          onClickButton={handleFilterButtonClick}
+        />
       </div>
 
       <div className='search-list'>
