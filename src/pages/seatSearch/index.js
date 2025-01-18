@@ -1,5 +1,4 @@
 import './style/index.css';
-import { NavigationBar } from '../../widgets/index.js';
 import { SeatItem } from './components/SeatItem';
 import { SearchButton } from './components/SearchButton';
 import { getSeats } from 'entities/thuckFuntion';
@@ -30,7 +29,6 @@ function SeatSearchPage({ date, start, end, ott }) {
 
   return (
     <div className='seat-search-page'>
-      <NavigationBar pageName='OTT 검색' />
       <div className='search-section'>
         <SearchButton
           date={formatDate(date)}
