@@ -93,7 +93,7 @@ function SeatSearchFilterPage() {
         </div>
       </div>
 
-      <button>페이지 이동</button>
+      <button className='navigation-button'>검색</button>
     </div>
   );
 }
