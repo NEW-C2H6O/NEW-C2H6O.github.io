@@ -1,6 +1,6 @@
 import './style/index.css';
 import { getOtts } from '../../entities/thuckFuntion.js';
-import { Navbar, CustomDatePicker } from '../../widgets/index.js';
+import { NavigationBar, CustomDatePicker } from '../../widgets/index.js';
 import { useState } from 'react';
 import { GroupedDropdown } from './components/GroupedDropdown.js';
 import { TimeTable } from './components/TimeTable.js';
@@ -42,7 +42,7 @@ function ReservationPage() {
 
   return (
     <div className='reservation-page'>
-      <Navbar pageName='예약' />
+      <NavigationBar pageName='예약' />
 
       <div className='input-form-list'>
         <div className='input-form'>

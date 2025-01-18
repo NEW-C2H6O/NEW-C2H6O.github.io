@@ -2,8 +2,7 @@ import './style/index.css';
 import { useState } from 'react';
 import moment from 'moment';
 import { getOtts } from 'entities/thuckFuntion';
-import { Navbar } from 'widgets';
-import { CustomDatePicker } from 'widgets';
+import { NavigationBar, CustomDatePicker } from 'widgets';
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import { GroupedDropdown } from './components/GroupedDropdown';
@@ -50,7 +49,7 @@ function SeatSearchFilterPage() {
 
   return (
     <div className='seat-search-filter-page'>
-      <Navbar pageName='OTT 검색' />
+      <NavigationBar pageName='OTT 검색' />
 
       <div className='input-form-list'>
         <div className='input-form'>

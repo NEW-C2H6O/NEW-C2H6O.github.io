@@ -1,5 +1,5 @@
 import './style/index.css';
-import { Navbar } from '../../widgets/index.js';
+import { NavigationBar } from '../../widgets/index.js';
 import { SeatItem } from './components/SeatItem';
 import { SearchButton } from './components/SearchButton';
 import { getSeats } from 'entities/thuckFuntion';
@@ -30,7 +30,7 @@ function SeatSearchPage({ date, start, end, ott }) {
 
   return (
     <div className='seat-search-page'>
-      <Navbar pageName='OTT 검색' />
+      <NavigationBar pageName='OTT 검색' />
       <div className='search-section'>
         <SearchButton
           date={formatDate(date)}
