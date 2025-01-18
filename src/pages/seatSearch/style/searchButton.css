@@ -1,0 +1,36 @@
+.search-button {
+  padding-right: 14px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 28px;
+}
+
+.filter-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.filter-list span {
+  height: min-content;
+
+  padding-left: 16px;
+  padding-right: 16px;
+
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.5;
+
+  border-right: solid #dddddd 1px;
+}
+
+.filter-list span:last-child {
+  border-right: none;
+}

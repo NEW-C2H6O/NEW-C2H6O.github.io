@@ -6,6 +6,30 @@
   flex-direction: column;
   align-items: center;
 
-  background-color: #f9f9f9;
+  background-color: #f5f6f8;
   font-family: Arial, sans-serif;
+}
+
+.search-section {
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  display: flex;
+  justify-content: center;
+
+  background-color: #ffffff;
+}
+
+.search-list {
+  width: 100%;
+  margin-top: 6px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+
+  background-color: #ffffff;
+
+  list-style: none;
 }

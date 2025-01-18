@@ -17,7 +17,8 @@ import {
   faPlus,
   faMagnifyingGlass,
   faCircleUser,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
+import { SeatSearchFilterPage } from 'pages/seatSearchFilter.js';
 
 library.add(faHouse, faFile, faPlus, faMagnifyingGlass, faCircleUser);
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/reservation-history" element={<ReservationHistoryPage />} />
         <Route path="/reservation" element={<ReservationPage />} />
         <Route path="/seat-search" element={<SeatSearchPage />} />
+        <Route path='/seat-search-filter' element={<SeatSearchFilterPage />} />
         <Route path="/my" element={<MyPage />} />
         <Route path="/my/code-input" element={<CodeInputPage />} />
       </Routes>
