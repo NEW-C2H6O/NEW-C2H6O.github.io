@@ -48,11 +48,22 @@ function SeatSearchFilterPage() {
     setDate(e);
   };
 
-  const [start, setStart] = useState(moment().hour(0).minute(0));
+  const nowMoment = moment();
+  const [start, setStart] = useState(
+    nowMoment
+      .clone()
+      .minutes(Math.floor(nowMoment.minutes() / 10) * 10)
+      .seconds(0),
+  );
   const onSelectStart = (e) => {
     setStart(e);
   };
-  const [end, setEnd] = useState(moment().hour(0).minute(0));
+  const [end, setEnd] = useState(
+    nowMoment
+      .clone()
+      .minutes(Math.ceil(nowMoment.minutes() / 10) * 10)
+      .seconds(0),
+  );
   const onSelectEnd = (e) => {
     setEnd(e);
   };
