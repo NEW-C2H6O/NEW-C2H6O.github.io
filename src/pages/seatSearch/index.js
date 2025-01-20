@@ -2,7 +2,7 @@ import './style/index.css';
 import { SeatItem } from './components/SeatItem';
 import { SearchButton } from './components/SearchButton';
 import { getSeats } from 'entities/thuckFuntion';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function formatDate(date) {
   const pad = (num) => num.toString().padStart(2, '0');
@@ -40,6 +40,8 @@ function SeatSearchPage() {
 
   const seats = getSeats();
 
+  const navigate = useNavigate();
+
   return (
     <div className='seat-search-page'>
       <div className='search-section'>
@@ -47,7 +49,7 @@ function SeatSearchPage() {
           date={formatDate(start)}
           time={formatTimePair(start, end)}
           ott={formatOtt(ott)}
-          onClickButton={''}
+          onClickButton={() => navigate(-1)}
         />
       </div>
 
