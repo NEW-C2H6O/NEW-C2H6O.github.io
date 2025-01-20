@@ -2,6 +2,7 @@ import './style/index.css';
 import { SeatItem } from './components/SeatItem';
 import { SearchButton } from './components/SearchButton';
 import { getSeats } from 'entities/thuckFuntion';
+import { useLocation } from 'react-router-dom';
 
 function formatDate(date) {
   const pad = (num) => num.toString().padStart(2, '0');
@@ -12,9 +13,16 @@ function formatDate(date) {
 }
 
 function formatTimePair(start, end) {
-  const formatTime = (momentObj) => momentObj.format('HH:mm');
+  const formatTime = (date) => {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
 
-  return `${formatTime(start)}-${formatTime(end)}`;
+  const time1 = formatTime(start);
+  const time2 = formatTime(end);
+
+  return `${time1} - ${time2}`;
 }
 
 function formatOtt(otts) {
@@ -24,14 +32,19 @@ function formatOtt(otts) {
   return `${ottName} ${profileNum}번`;
 }
 
-function SeatSearchPage({ date, start, end, ott }) {
+function SeatSearchPage() {
+  const location = useLocation();
+  const start = location.state.start;
+  const end = location.state.end;
+  const ott = location.state.ott;
+
   const seats = getSeats();
 
   return (
     <div className='seat-search-page'>
       <div className='search-section'>
         <SearchButton
-          date={formatDate(date)}
+          date={formatDate(start)}
           time={formatTimePair(start, end)}
           ott={formatOtt(ott)}
           onClickButton={''}
