@@ -1,30 +1,29 @@
 import styles from "./style/index.module.css";
-import { DatePickerBottomSheet } from "./componets/datePickerBottomSheet.jsx";
 
 import { ReactComponent as CalenderIcon } from "shared/assets/icons/calendar.svg";
 import { useReservationHistoryDatePickerStore, useReservationHistoryStore } from "features";
 import { FilterBottomSheet } from "./componets/filterBottomSheet";
 import { SearchFilter } from "./componets/searchFilter";
 import { ReservationItem } from "./componets/reservationItem";
+import { DatePickerBottomSheet } from "widgets";
 
 function ReservationHistoryPage() {
-  const { init: initDatePicker, openDatePicker } = useReservationHistoryDatePickerStore();
+  const { isOpen, openDatePicker, closeDatePicker } = useReservationHistoryDatePickerStore();
 
-  const { date } = useReservationHistoryStore();
+  const { date, setDate } = useReservationHistoryStore();
 
   return (
     <div className={styles.container}>
-      <DatePickerBottomSheet />
+      <DatePickerBottomSheet
+        isOpen={isOpen}
+        closeDatePicker={closeDatePicker}
+        onConfirm={setDate}
+      />
       <FilterBottomSheet />
       <div style={{ height: "1.71svh" }} />
       <div
         className={styles.searchDate}
         onClick={() => {
-          initDatePicker({
-            year: date.year,
-            month: date.month,
-            date: date.date,
-          });
           openDatePicker();
         }}
       >
