@@ -1,12 +1,10 @@
 import './style/index.css';
 import { useState } from 'react';
-import moment from 'moment';
 import { getOtts } from 'entities/thuckFuntion';
 import { CustomDatePicker } from 'widgets';
-import TimePicker from 'rc-time-picker';
-import 'rc-time-picker/assets/index.css';
 import { GroupedDropdown } from './components/GroupedDropdown';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
 
 function formatProfileOptions(otts) {
   return otts.map((ott) => ({
@@ -22,16 +20,15 @@ function formatProfileOptions(otts) {
   }));
 }
 
-function formatDate(date, time) {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate();
+function formatSearchTime(date, time) {
+  const result = new Date(date);
 
-  const hours = time.hours();
-  const minutes = time.minutes();
-  const seconds = time.seconds();
+  result.setHours(time.getHours());
+  result.setMinutes(time.getMinutes());
+  result.setSeconds(0);
+  result.setMilliseconds(0);
 
-  return new Date(year, month, day, hours, minutes, seconds);
+  return result;
 }
 
 function SeatSearchFilterPage() {
@@ -45,27 +42,18 @@ function SeatSearchFilterPage() {
     setDate(e);
   };
 
-  const nowMoment = moment();
-  const [start, setStart] = useState(
-    nowMoment
-      .clone()
-      .minutes(Math.floor(nowMoment.minutes() / 10) * 10)
-      .seconds(0),
-  );
+  const [start, setStart] = useState(null);
   const onSelectStart = (e) => {
+    e.setMinutes(Math.floor(e.getMinutes() / 10) * 10);
     setStart(e);
   };
-  const [end, setEnd] = useState(
-    nowMoment
-      .clone()
-      .minutes(Math.ceil(nowMoment.minutes() / 10) * 10)
-      .seconds(0),
-  );
+  const [end, setEnd] = useState(null);
   const onSelectEnd = (e) => {
+    e.setMinutes(Math.floor(e.getMinutes() / 10) * 10);
     setEnd(e);
   };
 
-  const [ott, setOtt] = useState(profileOptions.at(0).options.at(0));
+  const [ott, setOtt] = useState(null);
   function onSelectOtt(e) {
     console.log('ott handle method called: ', e);
     return setOtt(e);
@@ -88,24 +76,33 @@ function SeatSearchFilterPage() {
         <div className='input-form'>
           <span>시간 선택</span>
           <div className='time-picker-pair'>
-            <TimePicker
-              value={start}
+            <DatePicker
+              selected={start}
               onChange={onSelectStart}
-              placeholder='선택'
-              showSecond={false}
-              inputReadOnly={true}
-              minuteStep={10}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={10}
+              showTimeCaption={false}
+              use12Hours={false}
+              dateFormat='HH:mm'
+              timeFormat='HH:mm'
+              className='custom-timepicker'
             />
 
             <span> - </span>
 
-            <TimePicker
-              value={end}
+            <DatePicker
+              selected={end}
               onChange={onSelectEnd}
-              placeholder='선택'
-              showSecond={false}
-              inputReadOnly={true}
-              minuteStep={10}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={10}
+              showTimeCaption={false}
+              use12Hours={false}
+              dateFormat='HH:mm'
+              timeFormat='HH:mm'
+              className='custom-timepicker'
+              editable={false}
             />
           </div>
         </div>
@@ -121,11 +118,12 @@ function SeatSearchFilterPage() {
 
       <button
         className='navigation-button'
+        disabled={!date || !start || !end || !ott}
         onClick={() =>
           navigate('/seat-search', {
             state: {
-              start: formatDate(date, start),
-              end: formatDate(date, end),
+              start: formatSearchTime(date, start),
+              end: formatSearchTime(date, end),
               ott: ott,
             },
           })
