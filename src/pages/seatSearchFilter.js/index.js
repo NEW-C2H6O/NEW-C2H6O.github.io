@@ -1,5 +1,5 @@
 import './style/index.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getOtts } from 'entities/thuckFuntion';
 import { CustomDatePicker } from 'widgets';
 import { GroupedDropdown } from './components/GroupedDropdown';
@@ -31,6 +31,17 @@ function formatSearchTime(date, time) {
   return result;
 }
 
+function areAllSelected(date, start, end, ott) {
+  return date !== null && start !== null && end !== null && ott !== null;
+}
+
+function startIsFasterThanEnd(start, end) {
+  if (start instanceof Date && end instanceof Date) {
+    return start.getTime() < end.getTime();
+  }
+  return false;
+}
+
 function SeatSearchFilterPage() {
   const otts = getOtts();
   const profileOptions = formatProfileOptions(otts);
@@ -38,7 +49,6 @@ function SeatSearchFilterPage() {
   const now = new Date(Date.now());
   const [date, setDate] = useState(now);
   const onSelectDate = (e) => {
-    console.log('date handle method called: ', e);
     setDate(e);
   };
 
@@ -55,8 +65,47 @@ function SeatSearchFilterPage() {
 
   const [ott, setOtt] = useState(null);
   function onSelectOtt(e) {
-    console.log('ott handle method called: ', e);
-    return setOtt(e);
+    setOtt(e);
+  }
+
+  const [completeSelect, setCompleteSelect] = useState(false);
+  useEffect(() => {
+    if (!areAllSelected(date, start, end, ott)) {
+      setCompleteSelect(false);
+      return;
+    }
+
+    if (!startIsFasterThanEnd(start, end)) {
+      setCompleteSelect(false);
+      return;
+    }
+
+    setCompleteSelect(true);
+  }, [date, start, end, ott]);
+
+  function handleNavigationButtonClick() {
+    if (!completeSelect) {
+      if (!areAllSelected(date, start, end, ott)) {
+        alert('모든 조건을 입력해야 합니다.');
+        return;
+      }
+
+      if (!startIsFasterThanEnd(start, end)) {
+        alert('시작 시간이 종료 시간보다 빨라야 합니다.');
+        return;
+      }
+
+      alert('알 수 없는 오류 발생');
+      return;
+    }
+
+    navigate('/seat-search', {
+      state: {
+        start: formatSearchTime(date, start),
+        end: formatSearchTime(date, end),
+        ott: ott,
+      },
+    });
   }
 
   const navigate = useNavigate();
@@ -87,6 +136,7 @@ function SeatSearchFilterPage() {
               dateFormat='HH:mm'
               timeFormat='HH:mm'
               className='custom-timepicker'
+              placeholderText='시작'
             />
 
             <span> - </span>
@@ -103,6 +153,7 @@ function SeatSearchFilterPage() {
               timeFormat='HH:mm'
               className='custom-timepicker'
               editable={false}
+              placeholderText='종료'
             />
           </div>
         </div>
@@ -118,16 +169,7 @@ function SeatSearchFilterPage() {
 
       <button
         className='navigation-button'
-        disabled={!date || !start || !end || !ott}
-        onClick={() =>
-          navigate('/seat-search', {
-            state: {
-              start: formatSearchTime(date, start),
-              end: formatSearchTime(date, end),
-              ott: ott,
-            },
-          })
-        }>
+        onClick={() => handleNavigationButtonClick()}>
         검색
       </button>
     </div>
