@@ -1,20 +1,37 @@
+import axios from "axios";
 import styles from "./style/index.module.css";
 import { useRef, useState } from "react";
 
 function CodeInputPage() {
   const [code, setCode] = useState("");
   const inputRef = useRef(null);
+
+  const fetchCode = async (code) => {
+    const API_URL = process.env.REACT_APP_API_URL;
+    try {
+      const result = await axios.post(`${API_URL}/auth/activate`, { code }, { withCredentials: true });
+      console.log(result);
+      alert("인증이 완료되었습니다.");
+    } catch (error) {
+      console.error(error);
+      alert("올바른 인증 코드를 입력해주세요.");
+    }
+  }
+
   const inputOnChange = (e) => {
     const value = e.target.value;
     setCode(value);
     if (value.length === 4) {
       blurInput();
+      fetchCode(value);
     }
   };
+
   const focusInput = () => {
     if (!inputRef.current) return;
     inputRef.current.focus();
   };
+
   const blurInput = () => {
     if (!inputRef.current) return;
     inputRef.current.blur();
