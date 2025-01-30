@@ -36,7 +36,7 @@ function NavigationBar() {
         txt="예약"
       />
       <NavButton
-        link="/seat-search"
+        link="/seat-search-filter"
         defaultIcon={<SearchDefaultIcon />}
         selectedIcon={<SearchSelectedIcon />}
         txt="검색"
