@@ -29,7 +29,6 @@ const useReservationHistoryStore = create((set, get) => ({
     isPreviousIncluded,
     isMyReservationIncluded,
   }) => {
-    console.log(sortOption);
     set({
       filter: {
         ottPlatforms,
