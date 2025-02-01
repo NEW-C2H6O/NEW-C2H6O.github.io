@@ -5,17 +5,21 @@ import { DatePickerBottomSheet } from "./componets/datePickerBottomSheet.jsx";
 import { FilterBottomSheet } from "./componets/filterBottomSheet";
 import { SearchFilter } from "./componets/searchFilter";
 import { ReservationItem } from "./componets/reservationItem";
-import { useReservationHistoryDatePickerStore, useReservationHistoryStore, useReservationHistoryFilterStore } from "features";
+import { useReservationHistoryDatePickerStore, useReservationHistoryStore } from "features";
 import { SORT_OPTIONS } from "shared";
 
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function ReservationHistoryPage() {
   const { init: initDatePicker, openDatePicker } = useReservationHistoryDatePickerStore();
   const { filter, date } = useReservationHistoryStore();
-  const { isOpen } = useReservationHistoryFilterStore();
+  
+  const [ isLoading, setLoading ] = useState(false);
   const [ reservations, setReservations ] = useState([]);
+  const [ sliceInfo, setSliceInfo ] = useState(null);
+
+  const containerRef = useRef(null); 
 
   const getSortParam = (idx) => {
     const sortOption = SORT_OPTIONS[idx];
@@ -30,6 +34,9 @@ function ReservationHistoryPage() {
   }
   
   const getOttParam = (filter) => {
+    if (filter.ottPlatforms.length === 0) {
+      return null;
+    }
     const otts = filter.ottPlatforms.map(value => value + 1);
     const profiles = filter.ottProfiles.map(value => value + 1);
     if (otts.length >= 2) {
@@ -38,31 +45,46 @@ function ReservationHistoryPage() {
     return `${otts[0]}_${profiles.join("-")}`;
   }
 
-  const fetchReservations = async () => {
+  const fetchReservations = async (prev) => {
+    if (isLoading) return;
+    setLoading(true);
     const API_URL = process.env.REACT_APP_API_URL;
     try {
       const url = `${API_URL}/reservations`;
+      const sortParam = getSortParam(filter.sortOption);
+      const ottParam = getOttParam(filter);
+      const cursor = prev.length === 0 ? null : sliceInfo?.cursor;
       const params = new URLSearchParams({
         mine: filter.isMyReservationIncluded,
         upcoming: !filter.isPreviousIncluded,
-        sort: getSortParam(filter.sortOption),
-        ott: getOttParam(filter),
+        ...(sortParam && { sort: sortParam }),
+        ...(ottParam && { ott: ottParam }),
+        ...(cursor && { cursor: cursor })
       });
       const result = await axios.get(`${url}?${params.toString()}`, { withCredentials: true });
-      const reservations = result.data?.data.content;
-      // TODO: 스크롤 이벤트를 통해 무한 스크롤 추가 구현 필요. 이를 위해 sliceInfo를 저장하고 관리해야함
-      const sliceInfo = result.data?.data.sliceInfo;
-      setReservations(reservations);
+      setReservations([ ...prev, ...result.data?.data.content ]);
+      setSliceInfo(result.data?.data.sliceInfo);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
+
+  const handleScroll = (event) => {
+    const { scrollHeight, scrollTop, clientHeight } = event.target;
+    const bottom = scrollHeight === scrollTop + clientHeight;
+    if (bottom && !isLoading && !sliceInfo.last) {
+      fetchReservations(reservations);
+    }
+  };
   
   useEffect(() => {
-    if (!isOpen) {
-      fetchReservations();
+    fetchReservations([]);
+    if (containerRef?.current) {
+      containerRef.current.scrollTop = 0;
     }
-  }, [isOpen]);
+  }, [filter]);
 
   return (
     <div className={styles.container}>
@@ -88,7 +110,7 @@ function ReservationHistoryPage() {
       <div style={{ height: "2.53svh" }} />
       <div className={styles.divider} />
 
-      <div className={styles.listContainer}>
+      <div className={styles.listContainer} onScroll={handleScroll} ref={containerRef}>
       {
         reservations?.map((reservation) => {
           return <ReservationItem
