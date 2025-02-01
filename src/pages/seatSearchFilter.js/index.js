@@ -1,24 +1,10 @@
 import './style/index.css';
 import { useState, useEffect } from 'react';
-import { getOtts } from 'entities/thuckFuntion';
 import { CustomDatePicker } from 'widgets';
 import { GroupedDropdown } from './components/GroupedDropdown';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-
-function formatProfileOptions(otts) {
-  return otts.map((ott) => ({
-    label: ott.name,
-    options: ott.profile
-      .map((profile) => ({
-        label: profile.name,
-        value: profile.profileId,
-        ott: ott.ottId,
-        ottName: ott.name,
-      }))
-      .concat({ label: 'ALL', value: 0, ott: ott.ottId }),
-  }));
-}
+import { useOttOptionStore } from 'features/ott/ottOptionStroe';
 
 function formatSearchTime(date, time) {
   const result = new Date(date);
@@ -43,8 +29,10 @@ function startIsFasterThanEnd(start, end) {
 }
 
 function SeatSearchFilterPage() {
-  const otts = getOtts();
-  const profileOptions = formatProfileOptions(otts);
+  const { ottOptions, fetchOtts } = useOttOptionStore();
+  useEffect(() => {
+    fetchOtts();
+  }, []);
 
   const now = new Date(Date.now());
   const [date, setDate] = useState(now);
@@ -161,7 +149,7 @@ function SeatSearchFilterPage() {
         <div className='input-form'>
           <span>OTT 선택</span>
           <GroupedDropdown
-            groupedOptions={profileOptions}
+            groupedOptions={ottOptions}
             onSelectedOption={onSelectOtt}
           />
         </div>
