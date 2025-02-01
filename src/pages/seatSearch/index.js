@@ -1,4 +1,5 @@
 import './style/index.css';
+import { useEffect } from 'react';
 import { SeatItem } from './components/SeatItem';
 import { SearchButton } from './components/SearchButton';
 import { useLocation, useNavigate } from 'react-router-dom';
