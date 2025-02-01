@@ -13,14 +13,9 @@ const useOttOptionStore = create((set, get) => ({
   fetchOtts: async () => {
     // 정보가 없을 때만 요청
     if (get().otts.length === 0) {
-      const response = await getOtts();
+      const data = getOtts();
 
-      if (response.status !== 200) {
-        // TODO: 예외 처리
-        return;
-      }
-
-      const options = response.data.map((ott) => ({
+      const options = data.map((ott) => ({
         label: ott.name,
         options: ott.profiles
           .map((profile) => ({
