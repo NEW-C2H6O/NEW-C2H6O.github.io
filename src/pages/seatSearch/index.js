@@ -39,14 +39,10 @@ function SeatSearchPage() {
   const start = location.state.start;
   const end = location.state.end;
 
-  const { seats, setSeats } = useSeatStore((state) => ({
-    seats: state.seats,
-    setSeats: state.setSeats,
-  }));
-
+  const { seats, fetchSeats } = useSeatStore();
   useEffect(() => {
-    setSeats({ ott: ott, start: start, end: end });
-  }, [setSeats]);
+    fetchSeats({ ott: ott, start: start, end: end });
+  }, [ott, start, end]);
 
   const navigate = useNavigate();
 
