@@ -13,7 +13,7 @@ const useOttOptionStore = create((set, get) => ({
   fetchOtts: async () => {
     // 정보가 없을 때만 요청
     if (get().ottOptions.length === 0) {
-      const data = getOtts();
+      const data = (await getOtts()).data;
 
       const options = data.map((ott) => ({
         label: ott.name,
