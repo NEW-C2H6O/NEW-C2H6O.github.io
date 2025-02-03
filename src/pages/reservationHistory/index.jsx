@@ -5,13 +5,20 @@ import { DatePickerBottomSheet } from "./componets/datePickerBottomSheet.jsx";
 import { FilterBottomSheet } from "./componets/filterBottomSheet";
 import { SearchFilter } from "./componets/searchFilter";
 import { ReservationItem } from "./componets/reservationItem";
+
 import { useReservationHistoryDatePickerStore, useReservationHistoryStore } from "features";
 import { SORT_OPTIONS } from "shared";
 
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 
+import { DatePickerBottomSheet } from "widgets";
+
 function ReservationHistoryPage() {
+  const { isOpen, openDatePicker, closeDatePicker } = useReservationHistoryDatePickerStore();
+
+  const { date, setDate } = useReservationHistoryStore();
+
   const { init: initDatePicker, openDatePicker } = useReservationHistoryDatePickerStore();
   const { filter, date } = useReservationHistoryStore();
   
@@ -96,17 +103,16 @@ function ReservationHistoryPage() {
 
   return (
     <div className={styles.container}>
-      <DatePickerBottomSheet />
+      <DatePickerBottomSheet
+        isOpen={isOpen}
+        closeDatePicker={closeDatePicker}
+        onConfirm={setDate}
+      />
       <FilterBottomSheet />
       <div style={{ height: "1.71svh" }} />
       <div
         className={styles.searchDate}
         onClick={() => {
-          initDatePicker({
-            year: date.year,
-            month: date.month,
-            date: date.date,
-          });
           openDatePicker();
         }}
       >
