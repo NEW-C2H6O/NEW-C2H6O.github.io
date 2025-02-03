@@ -27,22 +27,29 @@ function formatTimePair(start, end) {
 }
 
 function formatOtt(otts) {
-  const ottName = otts.ottName;
-  const profileNum = otts.value;
+  if (otts == null || otts.length === 0) {
+    return '모든 OTT';
+  }
 
-  return `${ottName} ${profileNum}번`;
+  if (otts.length === 1) {
+    return `${otts[0].name} ${otts[0].profiles.join(', ')}번`;
+  }
+
+  return `${otts[0].name} ${otts[0].profiles.join(', ')}번 외 ${
+    otts.length - 1
+  }`;
 }
 
 function SeatSearchPage() {
   const location = useLocation();
-  const ott = location.state.ott;
+  const otts = location.state.otts;
   const start = location.state.start;
   const end = location.state.end;
 
   const { seats, fetchSeats } = useSeatStore();
   useEffect(() => {
-    fetchSeats({ ott: ott, start: start, end: end });
-  }, [ott, start, end]);
+    fetchSeats({ otts: otts, start: start, end: end });
+  }, [otts, start, end]);
 
   const navigate = useNavigate();
 
@@ -52,7 +59,7 @@ function SeatSearchPage() {
         <SearchButton
           date={formatDate(start)}
           time={formatTimePair(start, end)}
-          ott={formatOtt(ott)}
+          ott={formatOtt(otts)}
           onClickButton={() => navigate(-1)}
         />
       </div>

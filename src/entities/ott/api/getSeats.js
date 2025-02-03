@@ -1,14 +1,16 @@
 import axios from 'axios';
 
-export const getSeats = async (ott, start, end) => {
+export const getSeats = async (otts, start, end) => {
   try {
     let url = `${process.env.REACT_APP_API_URL}/ott/available?`;
-    
+
     url += `start=${start.toISOString().slice(0, 19)}`;
     url += `&end=${end.toISOString().slice(0, 19)}`;
-    
-    if (ott !== null) {
-      url += `&ott=${ott.ott}_${ott.value}`;
+
+    if (otts.length != 0) {
+      for (const ott of otts) {
+        url += `&ott=${ott.id}_${ott.profiles.join('-')}`;
+      }
     }
 
     const response = await axios.get(url, { withCredentials: true });
