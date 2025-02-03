@@ -41,6 +41,14 @@ function getDays(year, month) {
   return result;
 }
 
+/**
+ *
+ * @param {boolean} isOpen
+ * @param {function} closeDatePicker
+ * @param {function(year, month, date)} onConfirm
+ *
+ */
+
 function DatePickerBottomSheet({ isOpen, closeDatePicker, onConfirm }) {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
