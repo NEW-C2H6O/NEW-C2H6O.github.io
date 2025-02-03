@@ -69,7 +69,11 @@ function SeatSearchFilterPage() {
           return {
             ...ott,
             profiles:
-              profileId === 0 ? [1, 2, 3, 4] : [...ott.profiles, profileId],
+              profileId === 0
+                ? ottInfo
+                    .find((info) => info.ottId === ottId)
+                    .profiles.map((profile) => profile.profileId)
+                : [...ott.profiles, profileId],
           };
         }
         return ott;
