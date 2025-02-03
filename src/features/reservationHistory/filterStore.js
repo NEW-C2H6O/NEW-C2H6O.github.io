@@ -8,8 +8,7 @@ const defaultState = {
   selectedOttPlatform: null,
   selectedOttProfiles: Array.from({ length: 0 }, () => true),
   selectedSortOptions: Array.from({ length: SORT_OPTIONS.length }, () => false),
-  selectedPreviousInclusion: [true, false],
-  selectedMyInclusion: [true, false],
+  selectedMyOnly: [true, false],
 };
 
 const useReservationHistoryFilterStore = create((set, get) => ({
@@ -20,8 +19,7 @@ const useReservationHistoryFilterStore = create((set, get) => ({
     ottPlatforms,
     ottProfiles,
     sortOption,
-    isPreviousIncluded,
-    isMyReservationIncluded,
+    myOnly
   }) => {
     const selectedOttPlatforms = Array.from({ length: OTT_PLATFORMS.length }, () => false);
     ottPlatforms.forEach((v) => (selectedOttPlatforms[v] = true));
@@ -35,19 +33,15 @@ const useReservationHistoryFilterStore = create((set, get) => ({
     const selectedSortOptions = Array.from({ length: SORT_OPTIONS.length }, () => false);
     sortOption !== null && (selectedSortOptions[sortOption] = true);
 
-    const selectedPreviousInclusion = Array.from({ length: INCLUSION_OPTIONS.length }, () => false);
-    selectedPreviousInclusion[isPreviousIncluded ? 0 : 1] = true;
-
-    const selectedMyInclusion = Array.from({ length: INCLUSION_OPTIONS.length }, () => false);
-    selectedMyInclusion[isMyReservationIncluded ? 0 : 1] = true;
+    const selectedMyOnly = Array.from({ length: INCLUSION_OPTIONS.length }, () => false);
+    selectedMyOnly[myOnly ? 0 : 1] = true;
 
     set({
       selectedOttPlatforms,
       selectedOttPlatform,
       selectedOttProfiles,
       selectedSortOptions,
-      selectedPreviousInclusion,
-      selectedMyInclusion,
+      selectedMyOnly,
     });
   },
 
@@ -86,18 +80,10 @@ const useReservationHistoryFilterStore = create((set, get) => ({
     }
     set({ selectedSortOptions: newSelectedSortOptions });
   },
-  toggleSelectedPreviousInclusion: (index) => {
-    const newSelectedPreviousInclusion = Array.from(
-      { length: INCLUSION_OPTIONS.length },
-      () => false
-    );
-    newSelectedPreviousInclusion[index] = true;
-    set({ selectedPreviousInclusion: newSelectedPreviousInclusion });
-  },
-  toggleSelectedMyInclusion: (index) => {
-    const newSelectedMyInclusion = Array.from({ length: INCLUSION_OPTIONS.length }, () => false);
-    newSelectedMyInclusion[index] = true;
-    set({ selectedMyInclusion: newSelectedMyInclusion });
+  toggleSelectedMyOnly: (index) => {
+    const newSelectedMyOnly = Array.from({ length: INCLUSION_OPTIONS.length }, () => false);
+    newSelectedMyOnly[index] = true;
+    set({ selectedMyOnly: newSelectedMyOnly });
   },
 }));
 
