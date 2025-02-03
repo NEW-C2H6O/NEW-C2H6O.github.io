@@ -5,7 +5,7 @@ import { OTT_PLATFORMS, OTT_PROFILES, SORT_OPTIONS } from "shared";
 
 function SearchFilter() {
   const {
-    filter: { ottPlatforms, ottProfiles, sortOption, isPreviousIncluded, isMyReservationIncluded },
+    filter: { ottPlatforms, ottProfiles, sortOption, myOnly },
   } = useReservationHistoryStore();
 
   const { init, openFilter } = useReservationHistoryFilterStore();
@@ -14,8 +14,7 @@ function SearchFilter() {
       ottPlatforms,
       ottProfiles,
       sortOption,
-      isPreviousIncluded,
-      isMyReservationIncluded,
+      myOnly,
     });
     openFilter();
   }
@@ -35,15 +34,10 @@ function SearchFilter() {
       {sortOption !== null && (
         <div className={`${styles.item} ${styles.selected}`}>{`${SORT_OPTIONS[sortOption]}`}</div>
       )}
-      {isPreviousIncluded ? (
-        <div className={`${styles.item} ${styles.selected}`}>{`지난 예약 포함`}</div>
+      {myOnly ? (
+        <div className={`${styles.item} ${styles.selected}`}>{`내 예약만 보기`}</div>
       ) : (
-        <div className={`${styles.item} ${styles.notSelected}`}>{`지난 예약 제외`}</div>
-      )}
-      {isMyReservationIncluded ? (
-        <div className={`${styles.item} ${styles.selected}`}>{`내 예약 포함`}</div>
-      ) : (
-        <div className={`${styles.item} ${styles.notSelected}`}>{`내 예약 제외`}</div>
+        <div className={`${styles.item} ${styles.notSelected}`}>{`모든 예약 보기`}</div>
       )}
     </div>
   );

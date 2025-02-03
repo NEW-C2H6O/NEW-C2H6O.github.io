@@ -23,14 +23,14 @@ function ReservationHistoryPage() {
 
   const getSortParam = (idx) => {
     const sortOption = SORT_OPTIONS[idx];
-    if (sortOption === "최신순") {
-      return "createdAt,desc";
+    if (sortOption === "시간순") {
+      return "startTime,asc";
     } else if (sortOption === "이름순") {
       return "member,asc";
     } else if (sortOption === "플랫폼순") {
       return "ottName,asc";
     }
-    return "reservationId,desc";
+    return "reservationId,asc";
   }
   
   const getOttParam = (filter) => {
@@ -45,6 +45,13 @@ function ReservationHistoryPage() {
     return `${otts[0]}_${profiles.join("-")}`;
   }
 
+  const getDateParam = (date) => {
+    const year = date.year
+    const month = String(date.month).padStart(2, '0')
+    const day = String(date.date).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
   const fetchReservations = async (prev) => {
     if (isLoading) return;
     setLoading(true);
@@ -55,8 +62,9 @@ function ReservationHistoryPage() {
       const ottParam = getOttParam(filter);
       const cursor = prev.length === 0 ? null : sliceInfo?.cursor;
       const params = new URLSearchParams({
-        mine: filter.isMyReservationIncluded,
-        upcoming: !filter.isPreviousIncluded,
+        mine: filter.myOnly,
+        upcoming: false,
+        date: getDateParam(date),
         ...(sortParam && { sort: sortParam }),
         ...(ottParam && { ott: ottParam }),
         ...(cursor && { cursor: cursor })
@@ -73,7 +81,7 @@ function ReservationHistoryPage() {
 
   const handleScroll = (event) => {
     const { scrollHeight, scrollTop, clientHeight } = event.target;
-    const bottom = scrollHeight === scrollTop + clientHeight;
+    const bottom = Math.abs(scrollHeight - (scrollTop + clientHeight)) < 1;
     if (bottom && !isLoading && !sliceInfo.last) {
       fetchReservations(reservations);
     }
@@ -84,7 +92,7 @@ function ReservationHistoryPage() {
     if (containerRef?.current) {
       containerRef.current.scrollTop = 0;
     }
-  }, [filter]);
+  }, [filter, date]);
 
   return (
     <div className={styles.container}>

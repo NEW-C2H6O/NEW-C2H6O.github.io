@@ -17,15 +17,13 @@ function FilterBottomSheet() {
     selectedOttPlatform,
     selectedOttProfiles,
     selectedSortOptions,
-    selectedPreviousInclusion,
-    selectedMyInclusion,
+    selectedMyOnly,
 
     closeFilter,
     toggleSelectedOttPlatform,
     toggleSelectedOttProfile,
     toggleSelectedSortOption,
-    toggleSelectedPreviousInclusion,
-    toggleSelectedMyInclusion,
+    toggleSelectedMyOnly,
   } = useReservationHistoryFilterStore();
 
   const { setFilter } = useReservationHistoryStore();
@@ -60,17 +58,10 @@ function FilterBottomSheet() {
             iconSrc={null}
           />
           <FilterSelector
-            title={`지난 예약`}
-            items={INCLUSION_OPTIONS}
-            selectedItems={selectedPreviousInclusion}
-            toggleSelectedItem={toggleSelectedPreviousInclusion}
-            iconSrc={null}
-          />
-          <FilterSelector
             title={`내 예약`}
             items={INCLUSION_OPTIONS}
-            selectedItems={selectedMyInclusion}
-            toggleSelectedItem={toggleSelectedMyInclusion}
+            selectedItems={selectedMyOnly}
+            toggleSelectedItem={toggleSelectedMyOnly}
             iconSrc={null}
           />
           <div
@@ -90,8 +81,7 @@ function FilterBottomSheet() {
                   SORT_OPTIONS.findIndex((v, i) => selectedSortOptions[i]) === -1
                     ? null
                     : SORT_OPTIONS.findIndex((v, i) => selectedSortOptions[i]),
-                isPreviousIncluded: selectedPreviousInclusion[0] === true,
-                isMyReservationIncluded: selectedMyInclusion[0] === true,
+                myOnly: selectedMyOnly[0] === true,
               });
               closeFilter();
             }}
