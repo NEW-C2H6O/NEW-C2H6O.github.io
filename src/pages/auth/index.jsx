@@ -11,7 +11,7 @@ function AuthPage() {
       <img className={styles.cameraImage} src="/images/auth/movieCamera.png" />
       <a
         className={styles.loginButton}
-        href="https://api.kkomo.site/v1/auth/login?redirect=http://localhost:3000"
+        href={`https://api.kkomo.site/v1/auth/login?redirect=${window.location.origin}`}
       >
         <img className={styles.logo} src="/images/auth/kakaoLogo.png" />
         <div style={{ width: "16px" }} />
