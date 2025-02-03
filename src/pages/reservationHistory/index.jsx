@@ -1,7 +1,6 @@
 import styles from "./style/index.module.css";
 
 import { ReactComponent as CalenderIcon } from "shared/assets/icons/calendar.svg";
-import { DatePickerBottomSheet } from "./componets/datePickerBottomSheet.jsx";
 import { FilterBottomSheet } from "./componets/filterBottomSheet";
 import { SearchFilter } from "./componets/searchFilter";
 import { ReservationItem } from "./componets/reservationItem";
@@ -11,16 +10,11 @@ import { SORT_OPTIONS } from "shared";
 
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
-
 import { DatePickerBottomSheet } from "widgets";
 
 function ReservationHistoryPage() {
-  const { isOpen, openDatePicker, closeDatePicker } = useReservationHistoryDatePickerStore();
-
-  const { date, setDate } = useReservationHistoryStore();
-
-  const { init: initDatePicker, openDatePicker } = useReservationHistoryDatePickerStore();
-  const { filter, date } = useReservationHistoryStore();
+  const { init: initDatePicker, isOpen, openDatePicker, closeDatePicker } = useReservationHistoryDatePickerStore();
+  const { date, setDate, filter } = useReservationHistoryStore();
   
   const [ isLoading, setLoading ] = useState(false);
   const [ reservations, setReservations ] = useState([]);
