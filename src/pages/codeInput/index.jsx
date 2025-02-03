@@ -12,6 +12,7 @@ function CodeInputPage() {
       const result = await axios.post(`${API_URL}/auth/activate`, { code }, { withCredentials: true });
       console.log(result);
       alert("인증이 완료되었습니다.");
+      window.location.replace(`${API_URL}/auth/login?redirect=${window.location.origin}`);
     } catch (error) {
       console.error(error);
       alert("올바른 인증 코드를 입력해주세요.");
