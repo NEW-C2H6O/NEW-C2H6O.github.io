@@ -1,4 +1,4 @@
-import '../style/index.css'
+import '../style/index.css';
 import React from 'react';
 import Select from 'react-select';
 
@@ -6,8 +6,10 @@ const selectBoxStyle = {
   container: (provided) => ({
     ...provided,
     width: '100%',
+  }),
+  control: (provided) => ({
+    ...provided,
     border: 'none',
-    borderRadius: '8px',
   }),
 };
 

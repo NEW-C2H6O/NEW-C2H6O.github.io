@@ -8,11 +8,10 @@ const defaultState = {
   },
 
   filter: {
-    ottPlatforms: [0],
-    ottProfiles: [1],
-    sortOption: null,
-    isPreviousIncluded: false,
-    isMyReservationIncluded: true,
+    ottPlatforms: [0, 1, 2],
+    ottProfiles: [],
+    sortOption: 0,
+    myOnly: true,
   },
 
   // list
@@ -28,17 +27,14 @@ const useReservationHistoryStore = create((set, get) => ({
     ottPlatforms,
     ottProfiles,
     sortOption,
-    isPreviousIncluded,
-    isMyReservationIncluded,
+    myOnly,
   }) => {
-    console.log(sortOption);
     set({
       filter: {
         ottPlatforms,
         ottProfiles,
         sortOption,
-        isPreviousIncluded,
-        isMyReservationIncluded,
+        myOnly,
       },
     });
   },

@@ -11,8 +11,8 @@ const OTT_PROFILES = {
   티빙: ["1번", "2번", "3번", "4번"],
 };
 
-const SORT_OPTIONS = ["최신순", "이름순", "플랫폼순"];
+const SORT_OPTIONS = ["시간순", "이름순", "플랫폼순"];
 
-const INCLUSION_OPTIONS = ["포함", "미포함"];
+const INCLUSION_OPTIONS = ["내 예약만 보기", "모든 예약 보기"];
 
 export { OTT_PLATFORMS, OTT_PLATFORMS_IMAGE_SRC, OTT_PROFILES, SORT_OPTIONS, INCLUSION_OPTIONS };

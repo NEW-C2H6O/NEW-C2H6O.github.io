@@ -1,8 +1,9 @@
 import './style/index.css';
-import { NavigationBar } from '../../widgets/index.js';
+import { useEffect } from 'react';
 import { SeatItem } from './components/SeatItem';
 import { SearchButton } from './components/SearchButton';
-import { getSeats } from 'entities/thuckFuntion';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSeatStore } from 'features/seatSearch/seatStore';
 
 function formatDate(date) {
   const pad = (num) => num.toString().padStart(2, '0');
@@ -13,9 +14,16 @@ function formatDate(date) {
 }
 
 function formatTimePair(start, end) {
-  const formatTime = (momentObj) => momentObj.format('HH:mm');
+  const formatTime = (date) => {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
 
-  return `${formatTime(start)}-${formatTime(end)}`;
+  const time1 = formatTime(start);
+  const time2 = formatTime(end);
+
+  return `${time1} - ${time2}`;
 }
 
 function formatOtt(otts) {
@@ -25,18 +33,27 @@ function formatOtt(otts) {
   return `${ottName} ${profileNum}번`;
 }
 
-function SeatSearchPage({ date, start, end, ott }) {
-  const seats = getSeats();
+function SeatSearchPage() {
+  const location = useLocation();
+  const ott = location.state.ott;
+  const start = location.state.start;
+  const end = location.state.end;
+
+  const { seats, fetchSeats } = useSeatStore();
+  useEffect(() => {
+    fetchSeats({ ott: ott, start: start, end: end });
+  }, [ott, start, end]);
+
+  const navigate = useNavigate();
 
   return (
     <div className='seat-search-page'>
-      <NavigationBar pageName='OTT 검색' />
       <div className='search-section'>
         <SearchButton
-          date={formatDate(date)}
+          date={formatDate(start)}
           time={formatTimePair(start, end)}
           ott={formatOtt(ott)}
-          onClickButton={''}
+          onClickButton={() => navigate(-1)}
         />
       </div>
 
