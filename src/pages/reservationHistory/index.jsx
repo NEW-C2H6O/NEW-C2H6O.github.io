@@ -1,13 +1,12 @@
 import styles from "./style/index.module.css";
 
 import { ReactComponent as CalenderIcon } from "shared/assets/icons/calendar.svg";
-import { DatePickerBottomSheet } from "./componets/datePickerBottomSheet.jsx";
 import { FilterBottomSheet } from "./componets/filterBottomSheet";
 import { SearchFilter } from "./componets/searchFilter";
 import { ReservationItem } from "./componets/reservationItem";
 
 import { useReservationHistoryDatePickerStore, useReservationHistoryStore } from "features";
-import { SORT_OPTIONS } from "shared";
+import { getDateParam, SORT_OPTIONS } from "shared";
 
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
@@ -15,18 +14,20 @@ import { useEffect, useState, useRef } from "react";
 import { DatePickerBottomSheet } from "widgets";
 
 function ReservationHistoryPage() {
-  const { isOpen, openDatePicker, closeDatePicker } = useReservationHistoryDatePickerStore();
+  const {
+    init: initDatePicker,
+    isOpen,
+    openDatePicker,
+    closeDatePicker,
+  } = useReservationHistoryDatePickerStore();
 
-  const { date, setDate } = useReservationHistoryStore();
+  const { filter, date, setDate } = useReservationHistoryStore();
 
-  const { init: initDatePicker, openDatePicker } = useReservationHistoryDatePickerStore();
-  const { filter, date } = useReservationHistoryStore();
-  
-  const [ isLoading, setLoading ] = useState(false);
-  const [ reservations, setReservations ] = useState([]);
-  const [ sliceInfo, setSliceInfo ] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+  const [reservations, setReservations] = useState([]);
+  const [sliceInfo, setSliceInfo] = useState(null);
 
-  const containerRef = useRef(null); 
+  const containerRef = useRef(null);
 
   const getSortParam = (idx) => {
     const sortOption = SORT_OPTIONS[idx];
@@ -38,26 +39,19 @@ function ReservationHistoryPage() {
       return "ottName,asc";
     }
     return "reservationId,asc";
-  }
-  
+  };
+
   const getOttParam = (filter) => {
     if (filter.ottPlatforms.length === 0) {
       return null;
     }
-    const otts = filter.ottPlatforms.map(value => value + 1);
-    const profiles = filter.ottProfiles.map(value => value + 1);
+    const otts = filter.ottPlatforms.map((value) => value + 1);
+    const profiles = filter.ottProfiles.map((value) => value + 1);
     if (otts.length >= 2) {
       return otts.join(",");
     }
     return `${otts[0]}_${profiles.join("-")}`;
-  }
-
-  const getDateParam = (date) => {
-    const year = date.year
-    const month = String(date.month).padStart(2, '0')
-    const day = String(date.date).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
+  };
 
   const fetchReservations = async (prev) => {
     if (isLoading) return;
@@ -74,17 +68,17 @@ function ReservationHistoryPage() {
         date: getDateParam(date),
         ...(sortParam && { sort: sortParam }),
         ...(ottParam && { ott: ottParam }),
-        ...(cursor && { cursor: cursor })
+        ...(cursor && { cursor: cursor }),
       });
       const result = await axios.get(`${url}?${params.toString()}`, { withCredentials: true });
-      setReservations([ ...prev, ...result.data?.data.content ]);
+      setReservations([...prev, ...result.data?.data.content]);
       setSliceInfo(result.data?.data.sliceInfo);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const handleScroll = (event) => {
     const { scrollHeight, scrollTop, clientHeight } = event.target;
@@ -93,7 +87,7 @@ function ReservationHistoryPage() {
       fetchReservations(reservations);
     }
   };
-  
+
   useEffect(() => {
     fetchReservations([]);
     if (containerRef?.current) {
@@ -125,14 +119,9 @@ function ReservationHistoryPage() {
       <div className={styles.divider} />
 
       <div className={styles.listContainer} onScroll={handleScroll} ref={containerRef}>
-      {
-        reservations?.map((reservation) => {
-          return <ReservationItem
-            key={reservation.reservationId}
-            reservation={reservation}
-          />
-        })
-      }
+        {reservations?.map((reservation) => {
+          return <ReservationItem key={reservation.reservationId} reservation={reservation} />;
+        })}
       </div>
     </div>
   );
