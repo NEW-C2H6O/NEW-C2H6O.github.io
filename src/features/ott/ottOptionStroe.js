@@ -2,6 +2,7 @@ import { getOtts } from 'entities/ott/api/getOtts';
 import { create } from 'zustand';
 
 const defaultState = {
+  ottInfo: [],
   ottOptions: [],
 };
 
@@ -15,24 +16,31 @@ const useOttOptionStore = create((set, get) => ({
     if (get().ottOptions.length === 0) {
       const data = (await getOtts()).data;
 
-      const options = data.map((ott) => ({
-        label: ott.name,
-        options: ott.profiles
-          .map((profile) => ({
+      const options = [
+        {
+          label: '모든 프로필',
+          options: data.map((ott) => ({
+            label: ott.name,
+            value: `${ott.ottId}_0`,
+            group: 0,
+            ott: ott.ottId,
+            isDisabled: false,
+          })),
+        },
+      ].concat(
+        data.map((ott) => ({
+          label: ott.name,
+          options: ott.profiles.map((profile) => ({
             label: profile.name,
-            value: profile.profileId,
+            value: `${ott.ottId}_${profile.profileId}`,
+            group: ott.ottId,
             ott: ott.ottId,
-            ottName: ott.name,
-          }))
-          .concat({
-            label: 'ALL',
-            value: 0,
-            ott: ott.ottId,
-            ottName: ott.name,
-          }),
-      }));
+            isDisabled: false,
+          })),
+        })),
+      );
 
-      set({ ottOptions: options });
+      set({ ottInfo: data, ottOptions: options });
     }
   },
 }));

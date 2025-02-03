@@ -17,8 +17,8 @@ function formatSearchTime(date, time) {
   return result;
 }
 
-function areAllSelected(date, start, end, ott) {
-  return date !== null && start !== null && end !== null && ott !== null;
+function areAllSelected(date, start, end, otts) {
+  return date !== null && start !== null && end !== null && otts !== null;
 }
 
 function startIsFasterThanEnd(start, end) {
@@ -29,9 +29,10 @@ function startIsFasterThanEnd(start, end) {
 }
 
 function SeatSearchFilterPage() {
-  const { ottOptions, fetchOtts } = useOttOptionStore();
+  const { ottInfo, ottOptions, fetchOtts } = useOttOptionStore();
   useEffect(() => {
     fetchOtts();
+    setLoading(false);
   }, []);
 
   const now = new Date(Date.now());
@@ -51,14 +52,42 @@ function SeatSearchFilterPage() {
     setEnd(e);
   };
 
-  const [ott, setOtt] = useState(null);
-  function onSelectOtt(e) {
-    setOtt(e);
+  const [otts, setOtts] = useState([]);
+  function onSelectOtt(options) {
+    let formattedOtts = ottInfo.map((ott) => ({
+      id: ott.ottId,
+      name: ott.name,
+      profiles: [],
+    }));
+
+    for (const option of options) {
+      const ottId = Number(option.value.charAt(0));
+      const profileId = Number(option.value.charAt(2));
+
+      formattedOtts = formattedOtts.map((ott) => {
+        if (ott.id === ottId) {
+          return {
+            ...ott,
+            profiles:
+              profileId === 0
+                ? ottInfo
+                    .find((info) => info.ottId === ottId)
+                    .profiles.map((profile) => profile.profileId)
+                : [...ott.profiles, profileId],
+          };
+        }
+        return ott;
+      });
+    }
+
+    const result = formattedOtts.filter((item) => item.profiles.length != 0);
+
+    setOtts(result);
   }
 
   const [completeSelect, setCompleteSelect] = useState(false);
   useEffect(() => {
-    if (!areAllSelected(date, start, end, ott)) {
+    if (!areAllSelected(date, start, end, otts)) {
       setCompleteSelect(false);
       return;
     }
@@ -69,11 +98,11 @@ function SeatSearchFilterPage() {
     }
 
     setCompleteSelect(true);
-  }, [date, start, end, ott]);
+  }, [date, start, end, otts]);
 
   function handleNavigationButtonClick() {
     if (!completeSelect) {
-      if (!areAllSelected(date, start, end, ott)) {
+      if (!areAllSelected(date, start, end, otts)) {
         alert('모든 조건을 입력해야 합니다.');
         return;
       }
@@ -91,12 +120,17 @@ function SeatSearchFilterPage() {
       state: {
         start: formatSearchTime(date, start),
         end: formatSearchTime(date, end),
-        ott: ott,
+        otts: otts,
       },
     });
   }
 
   const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(true);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className='seat-search-filter-page'>
