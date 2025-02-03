@@ -14,6 +14,8 @@ const defaultState = {
     isPreviousIncluded: false,
     isMyReservationIncluded: true,
   },
+
+  // list
 };
 
 const useReservationHistoryStore = create((set, get) => ({
@@ -21,7 +23,7 @@ const useReservationHistoryStore = create((set, get) => ({
 
   //actions
   init: () => set({ ...defaultState }),
-  setDate: ({ year, month, date }) => set({ date: { year, month, date } }),
+  setDate: (year, month, date) => set({ date: { year, month, date } }),
   setFilter: ({
     ottPlatforms,
     ottProfiles,
@@ -40,6 +42,8 @@ const useReservationHistoryStore = create((set, get) => ({
       },
     });
   },
+
+  getList: () => {},
 }));
 
 export { useReservationHistoryStore };
