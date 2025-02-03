@@ -55,6 +55,8 @@ function GroupedDropdown({ groupedOptions, onSelectedOption }) {
     setSelectedAllOptions(newAllOptions);
     setSelectedProfileOptions(newProfileOptions);
     setSelectedOptions(newOptions);
+
+    onSelectedOption(newOptions);
   };
 
   useEffect(() => {
@@ -94,7 +96,6 @@ function GroupedDropdown({ groupedOptions, onSelectedOption }) {
       formatGroupLabel={formatGroupLabel}
       className='grouped-dropdown'
       closeMenuOnSelect={false}
-      onMenuClose={() => onSelectedOption(selectedOptions)}
     />
   );
 }
