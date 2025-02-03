@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import {
   HomePage,
   MyPage,
@@ -7,6 +7,7 @@ import {
   ReservationHistoryPage,
   SeatSearchPage,
   CodeInputPage,
+  AuthPage,
 } from "./pages/index.js";
 import { AppBar, NavigationBar } from "./widgets/index.js";
 
@@ -23,10 +24,16 @@ import { SeatSearchFilterPage } from 'pages/seatSearchFilter.js';
 library.add(faHouse, faFile, faPlus, faMagnifyingGlass, faCircleUser);
 
 function App() {
-  const height = window.innerHeight;
+  const location = useLocation();
+  if (location.pathname === "/auth")
+    return (
+      <div className="App" style={{ height: window.innerHeight }}>
+        <AuthPage />
+      </div>
+    );
 
   return (
-    <div className="App" style={{ height: height }}>
+    <div className="App" style={{ height: window.innerHeight }}>
       <AppBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
