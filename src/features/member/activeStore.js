@@ -13,8 +13,8 @@ const useActiveStore = create((set, get) => ({
   fetchActive: async () => {
     const data = (await getMe()).data;
 
-    set(data.isActivated);
-  }
-}))
+    set({ isActive: data.isActivated });
+  },
+}));
 
 export { useActiveStore };
