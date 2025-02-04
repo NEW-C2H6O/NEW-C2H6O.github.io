@@ -37,6 +37,11 @@ function MyPage() {
     fetchMyInfo();
   }, []);
 
+  const { isActive, fetchActive } = useActiveStore();
+  useEffect(() => {
+    fetchActive();
+  }, []);
+
   return (
     <div className={styles.container}>
       <section className={styles.profileSection}>
