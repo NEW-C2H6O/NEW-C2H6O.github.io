@@ -9,7 +9,7 @@ import {
   CodeInputPage,
   AuthPage,
 } from "./pages/index.js";
-import { AppBar, NavigationBar } from "./widgets/index.js";
+import { AppBar, NavigationBar, ProtectedRoute } from './widgets/index.js';
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -37,12 +37,15 @@ function App() {
       <AppBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/reservation-history" element={<ReservationHistoryPage />} />
-        <Route path="/reservation" element={<ReservationPage />} />
-        <Route path="/seat-search" element={<SeatSearchPage />} />
-        <Route path='/seat-search-filter' element={<SeatSearchFilterPage />} />
         <Route path="/my" element={<MyPage />} />
         <Route path="/my/code-input" element={<CodeInputPage />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/reservation-history" element={<ReservationHistoryPage />} />
+          <Route path="/reservation" element={<ReservationPage />} />
+          <Route path="/seat-search" element={<SeatSearchPage />} />
+          <Route path="/seat-search-filter" element={<SeatSearchFilterPage />} />
+        </Route>
       </Routes>
       <NavigationBar />
     </div>
