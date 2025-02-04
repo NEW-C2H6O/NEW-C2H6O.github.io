@@ -4,8 +4,7 @@ import { CustomDatePicker } from 'widgets';
 import { GroupedDropdown } from './components/GroupedDropdown';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-import { useOttOptionStore } from 'features/ott/ottOptionStroe';
-import { useFilterStore } from 'features/seatSearchFitler/filterStore';
+import { useOttOptionStore, useFilterStore } from 'features';
 
 const getAlertMessage = (date, start, end, otts) => {
   if (!areAllSelected(date, start, end, otts)) {

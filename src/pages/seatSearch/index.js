@@ -3,8 +3,7 @@ import { useEffect } from 'react';
 import { SeatItem } from './components/SeatItem';
 import { SearchButton } from './components/SearchButton';
 import { useNavigate } from 'react-router-dom';
-import { useSeatStore } from 'features/seatSearch/seatStore';
-import { useFilterStore } from 'features/seatSearchFitler/filterStore';
+import { useSeatStore, useFilterStore } from 'features';
 
 function formatDate(date) {
   const pad = (num) => num.toString().padStart(2, '0');

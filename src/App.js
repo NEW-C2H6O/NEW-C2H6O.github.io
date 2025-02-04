@@ -6,6 +6,7 @@ import {
   ReservationPage,
   ReservationHistoryPage,
   SeatSearchPage,
+  SeatSearchFilterPage,
   CodeInputPage,
   AuthPage,
 } from "./pages/index.js";
@@ -19,7 +20,6 @@ import {
   faMagnifyingGlass,
   faCircleUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { SeatSearchFilterPage } from 'pages/seatSearchFilter.js';
 
 library.add(faHouse, faFile, faPlus, faMagnifyingGlass, faCircleUser);
 
