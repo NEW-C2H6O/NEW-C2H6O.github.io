@@ -2,8 +2,9 @@ import './style/index.css';
 import { useEffect } from 'react';
 import { SeatItem } from './components/SeatItem';
 import { SearchButton } from './components/SearchButton';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSeatStore } from 'features/seatSearch/seatStore';
+import { useFilterStore } from 'features/seatSearchFitler/filterStore';
 
 function formatDate(date) {
   const pad = (num) => num.toString().padStart(2, '0');
@@ -41,15 +42,12 @@ function formatOtt(otts) {
 }
 
 function SeatSearchPage() {
-  const location = useLocation();
-  const otts = location.state.otts;
-  const start = location.state.start;
-  const end = location.state.end;
+  const { start, end, selectedOttInfo } = useFilterStore();
 
   const { seats, fetchSeats } = useSeatStore();
   useEffect(() => {
-    fetchSeats({ otts: otts, start: start, end: end });
-  }, [otts, start, end]);
+    fetchSeats({ otts: selectedOttInfo, start: start, end: end });
+  }, [selectedOttInfo, start, end]);
 
   const navigate = useNavigate();
 
@@ -59,7 +57,7 @@ function SeatSearchPage() {
         <SearchButton
           date={formatDate(start)}
           time={formatTimePair(start, end)}
-          ott={formatOtt(otts)}
+          ott={formatOtt(selectedOttInfo)}
           onClickButton={() => navigate(-1)}
         />
       </div>

@@ -5,20 +5,22 @@ import { GroupedDropdown } from './components/GroupedDropdown';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { useOttOptionStore } from 'features/ott/ottOptionStroe';
+import { useFilterStore } from 'features/seatSearchFitler/filterStore';
 
-function formatSearchTime(date, time) {
-  const result = new Date(date);
+const getAlertMessage = (date, start, end, otts) => {
+  if (!areAllSelected(date, start, end, otts)) {
+    return '모든 조건을 입력해야 합니다.';
+  }
 
-  result.setHours(time.getHours());
-  result.setMinutes(time.getMinutes());
-  result.setSeconds(0);
-  result.setMilliseconds(0);
+  if (!startIsFasterThanEnd(start, end)) {
+    return '시작 시간이 종료 시간보다 빨라야 합니다.';
+  }
 
-  return result;
-}
+  return null;
+};
 
 function areAllSelected(date, start, end, otts) {
-  return date !== null && start !== null && end !== null && otts !== null;
+  return date != null && start != null && end != null && otts != null;
 }
 
 function startIsFasterThanEnd(start, end) {
@@ -30,104 +32,39 @@ function startIsFasterThanEnd(start, end) {
 
 function SeatSearchFilterPage() {
   const { ottInfo, ottOptions, fetchOtts } = useOttOptionStore();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetchOtts();
     setLoading(false);
   }, []);
 
-  const now = new Date(Date.now());
-  const [date, setDate] = useState(now);
-  const onSelectDate = (e) => {
-    setDate(e);
-  };
+  const {
+    date,
+    start,
+    end,
+    selectedOttOptions,
+    setDate,
+    setStart,
+    setEnd,
+    setOttOptionAndInfo,
+  } = useFilterStore();
+  const onSelectDate = (e) => setDate(e);
+  const onSelectStart = (e) => setStart(e);
+  const onSelectEnd = (e) => setEnd(e);
+  const onSelectOtt = (options) => setOttOptionAndInfo(options, ottInfo);
 
-  const [start, setStart] = useState(null);
-  const onSelectStart = (e) => {
-    e.setMinutes(Math.floor(e.getMinutes() / 10) * 10);
-    setStart(e);
-  };
-  const [end, setEnd] = useState(null);
-  const onSelectEnd = (e) => {
-    e.setMinutes(Math.floor(e.getMinutes() / 10) * 10);
-    setEnd(e);
-  };
-
-  const [otts, setOtts] = useState([]);
-  function onSelectOtt(options) {
-    let formattedOtts = ottInfo.map((ott) => ({
-      id: ott.ottId,
-      name: ott.name,
-      profiles: [],
-    }));
-
-    for (const option of options) {
-      const ottId = Number(option.value.charAt(0));
-      const profileId = Number(option.value.charAt(2));
-
-      formattedOtts = formattedOtts.map((ott) => {
-        if (ott.id === ottId) {
-          return {
-            ...ott,
-            profiles:
-              profileId === 0
-                ? ottInfo
-                    .find((info) => info.ottId === ottId)
-                    .profiles.map((profile) => profile.profileId)
-                : [...ott.profiles, profileId],
-          };
-        }
-        return ott;
-      });
-    }
-
-    const result = formattedOtts.filter((item) => item.profiles.length != 0);
-
-    setOtts(result);
-  }
-
-  const [completeSelect, setCompleteSelect] = useState(false);
-  useEffect(() => {
-    if (!areAllSelected(date, start, end, otts)) {
-      setCompleteSelect(false);
+  function onClickNavigationButton() {
+    const message = getAlertMessage(date, start, end, selectedOttOptions);
+    if (message != null) {
+      alert(message);
       return;
     }
 
-    if (!startIsFasterThanEnd(start, end)) {
-      setCompleteSelect(false);
-      return;
-    }
-
-    setCompleteSelect(true);
-  }, [date, start, end, otts]);
-
-  function handleNavigationButtonClick() {
-    if (!completeSelect) {
-      if (!areAllSelected(date, start, end, otts)) {
-        alert('모든 조건을 입력해야 합니다.');
-        return;
-      }
-
-      if (!startIsFasterThanEnd(start, end)) {
-        alert('시작 시간이 종료 시간보다 빨라야 합니다.');
-        return;
-      }
-
-      alert('알 수 없는 오류 발생');
-      return;
-    }
-
-    navigate('/seat-search', {
-      state: {
-        start: formatSearchTime(date, start),
-        end: formatSearchTime(date, end),
-        otts: otts,
-      },
-    });
+    navigate('/seat-search');
   }
 
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true);
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -138,7 +75,7 @@ function SeatSearchFilterPage() {
         <div className='input-form'>
           <span>날짜 선택</span>
           <CustomDatePicker
-            defaultDate={now}
+            defaultDate={date}
             onSelectDate={onSelectDate}
             givenClassName={'date-input'}
           />
@@ -185,13 +122,12 @@ function SeatSearchFilterPage() {
           <GroupedDropdown
             groupedOptions={ottOptions}
             onSelectedOption={onSelectOtt}
+            defaultOptions={selectedOttOptions}
           />
         </div>
       </div>
 
-      <button
-        className='navigation-button'
-        onClick={() => handleNavigationButtonClick()}>
+      <button className='navigation-button' onClick={onClickNavigationButton}>
         검색
       </button>
     </div>

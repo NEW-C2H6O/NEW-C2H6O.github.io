@@ -39,7 +39,7 @@ const formatGroupLabel = (data) => (
   </div>
 );
 
-function GroupedDropdown({ groupedOptions, onSelectedOption }) {
+function GroupedDropdown({ groupedOptions, onSelectedOption, defaultOptions }) {
   const [options, setOptions] = useState(groupedOptions);
   const [selectedAllOptions, setSelectedAllOptions] = useState([]);
   const [selectedProfileOptions, setSelectedProfileOptions] = useState([]);
@@ -59,18 +59,6 @@ function GroupedDropdown({ groupedOptions, onSelectedOption }) {
     onSelectedOption(newOptions);
   };
 
-  useEffect(() => {
-    setOptions(
-      groupedOptions.map((group) => ({
-        ...group,
-        options: group.options.map((option) => ({
-          ...option,
-          isDisabled: getDisabled(option),
-        })),
-      })),
-    );
-  }, [selectedAllOptions, groupedOptions]);
-
   const getDisabled = (option) => {
     // 프로필 옵션이 하나라도 선택되어 있으면 ALL 옵션 선택 불가
     if (option.group === 0) {
@@ -84,6 +72,20 @@ function GroupedDropdown({ groupedOptions, onSelectedOption }) {
       (allOption) => allOption.ott === option.group,
     );
   };
+
+  useEffect(() => onChangeOption(defaultOptions), []);
+
+  useEffect(() => {
+    setOptions(
+      groupedOptions.map((group) => ({
+        ...group,
+        options: group.options.map((option) => ({
+          ...option,
+          isDisabled: getDisabled(option),
+        })),
+      })),
+    );
+  }, [selectedAllOptions, groupedOptions]);
 
   return (
     <Select
