@@ -45,6 +45,7 @@ function App() {
           <Route path="/reservation" element={<ReservationPage />} />
           <Route path="/seat-search" element={<SeatSearchPage />} />
           <Route path="/seat-search-filter" element={<SeatSearchFilterPage />} />
+          <Route path="/my/code-input" element={<CodeInputPage />} />
         </Route>
       </Routes>
       <NavigationBar />

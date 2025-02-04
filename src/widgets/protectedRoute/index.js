@@ -8,7 +8,7 @@ function ProtectedRoute() {
     fetchActive();
   }, []);
 
-  return isAvtice ? <Outlet /> : <Navigate to='/' replace />;
+  return !isAvtice ? <Outlet /> : <Navigate to='/my/code-input' />;
 }
 
 export { ProtectedRoute };
