@@ -44,9 +44,18 @@ const useReservationHistoryStore = create((set, get) => ({
     });
   },
 
-  setSliceInfo: (sliceInfo) => set({ sliceInfo }),
+  fetchFirstReservations: async() => {
+    set({ isLoading: true });
+    const { filter, date } = get();
+    const result = await getReservations(filter, date, null);
+    set({
+      reservations: result.content,
+      sliceInfo: result.sliceInfo,
+      isLoading: false,
+    });
+  },
 
-  fetchReservations: async () => {
+  fetchNextReservations: async () => {
     set({ isLoading: true });
     const { filter, date, reservations, sliceInfo } = get();
     const cursor = reservations.length === 0 ? null : sliceInfo?.cursor;

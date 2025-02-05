@@ -17,10 +17,10 @@ function ReservationHistoryPage() {
     setDate, 
     filter, 
     reservations, 
-    fetchReservations, 
+    fetchFirstReservations,
+    fetchNextReservations, 
     isLoading, 
-    sliceInfo,
-    setSliceInfo
+    sliceInfo
   } = useReservationHistoryStore();
   
   const containerRef = useRef(null); 
@@ -29,17 +29,16 @@ function ReservationHistoryPage() {
     const { scrollHeight, scrollTop, clientHeight } = event.target;
     const bottom = Math.abs(scrollHeight - (scrollTop + clientHeight)) < 1;
     if (bottom && !isLoading && !sliceInfo.last) {
-      fetchReservations();
+      fetchNextReservations();
     }
   };
   
   useEffect(() => {
-    setSliceInfo(null);
-    fetchReservations();
+    fetchFirstReservations();
     if (containerRef?.current) {
       containerRef.current.scrollTop = 0;
     }
-  }, [filter, date, fetchReservations]);
+  }, [filter, date, fetchFirstReservations]);
 
   useEffect(() => {
     fetchMember();
