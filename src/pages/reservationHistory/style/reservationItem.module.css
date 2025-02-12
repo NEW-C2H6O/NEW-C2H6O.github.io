@@ -44,7 +44,11 @@
   }
 }
 
-.editButton {
-  height: 1.84svh;
+.deleteIcon {
+  height: 2.5svh;
   aspect-ratio: 1;
+}
+
+.deleteIcon:hover {
+  opacity: 0.5;
 }
