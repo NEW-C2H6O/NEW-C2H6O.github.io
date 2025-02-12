@@ -9,6 +9,7 @@ import {
   SeatSearchFilterPage,
   CodeInputPage,
   AuthPage,
+  NotFoundPage
 } from "./pages/index.js";
 import { AppBar, NavigationBar, ProtectedRoute } from './widgets/index.js';
 
@@ -47,6 +48,8 @@ function App() {
           <Route path="/seat-search-filter" element={<SeatSearchFilterPage />} />
           <Route path="/my/code-input" element={<CodeInputPage />} />
         </Route>
+
+        <Route path={"*"} element={<NotFoundPage/>}/>
       </Routes>
       <NavigationBar />
     </div>
