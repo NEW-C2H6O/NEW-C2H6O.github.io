@@ -27,9 +27,22 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: left;
+  align-items: center;
 
   background-color: #ffffff;
 
   list-style: none;
+}
+
+.notFoundGuide {
+  position: absolute;
+  top: 50%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  color: #616161;
+  font-size: 14px;
 }
