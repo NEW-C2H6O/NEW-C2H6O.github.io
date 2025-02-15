@@ -3,7 +3,11 @@ import styles from "../style/input.module.css";
 import { useReservationStore } from "features";
 
 function InputTime() {
-  const { isSelectedTime, setSelectedTime } = useReservationStore();
+  const {
+    isReservedTime,
+    selectedTime: { stTimeIdx, edTimeIdx },
+    setSelectedTime,
+  } = useReservationStore();
 
   return (
     <div className={styles.timeSelectBox}>
@@ -26,12 +30,17 @@ function InputTime() {
           return (
             <div key={i} className={styles.itemRow}>
               {Array.from({ length: 6 }, (_, j) => {
+                const backgroundColor = isReservedTime[i * 6 + j]
+                  ? "#D9D9D9"
+                  : stTimeIdx && stTimeIdx <= i * 6 + j && i * 6 + j <= edTimeIdx
+                  ? "#017050"
+                  : "#ffffff";
                 return (
                   <div
                     key={i * 6 + j}
                     className={styles.item}
-                    style={isSelectedTime[i * 6 + j] ? { backgroundColor: "#017050" } : {}}
-                    onClick={() => setSelectedTime(i * 6 + j, !isSelectedTime[i * 6 + j])}
+                    style={{ backgroundColor }}
+                    onClick={() => setSelectedTime(i * 6 + j)}
                   />
                 );
               })}
