@@ -9,9 +9,7 @@ async function getReservationList({ ottId, profileId, date }) {
       }
     );
 
-    console.log(response.data);
-
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.log(error);
     throw new Error("Failed to fetch seats");
