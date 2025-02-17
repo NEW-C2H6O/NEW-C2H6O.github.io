@@ -1,12 +1,14 @@
 import './style/index.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { SeatItem } from './components/SeatItem';
 import { SearchButton } from './components/SearchButton';
 import { useNavigate } from 'react-router-dom';
-import { useSeatStore } from 'features/seatSearch/seatStore';
-import { useFilterStore } from 'features/seatSearchFitler/filterStore';
+import { useSeatStore, useFilterStore } from 'features';
 
 function formatDate(date) {
+  if (date == null) {
+    return 'MM/DD';
+  }
   const pad = (num) => num.toString().padStart(2, '0');
   const month = pad(date.getMonth() + 1);
   const day = pad(date.getDate());
@@ -15,6 +17,10 @@ function formatDate(date) {
 }
 
 function formatTimePair(start, end) {
+  if (start == null || end == null) {
+    return 'HH:MM - HH:MM';
+  }
+
   const formatTime = (date) => {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
@@ -43,10 +49,17 @@ function formatOtt(otts) {
 
 function SeatSearchPage() {
   const { start, end, selectedOttInfo } = useFilterStore();
+  const [conditionExist, setConditionExist] = useState(false);
+  useEffect(() => {
+    if ((start != null) & (end != null)) {
+      setConditionExist(true);
+    }
+  }, []);
 
   const { seats, fetchSeats } = useSeatStore();
   useEffect(() => {
-    fetchSeats({ otts: selectedOttInfo, start: start, end: end });
+    if (conditionExist)
+      fetchSeats({ otts: selectedOttInfo, start: start, end: end });
   }, [selectedOttInfo, start, end]);
 
   const navigate = useNavigate();
@@ -63,9 +76,16 @@ function SeatSearchPage() {
       </div>
 
       <div className='search-list'>
-        {seats.map((seat) => {
-          return <SeatItem seat={seat} />;
-        })}
+        {conditionExist ? (
+          seats.map((seat) => {
+            return <SeatItem seat={seat} />;
+          })
+        ) : (
+          <div className='notFoundGuide'>
+            <img src='images/pictogram/notFoundImage.png' width='50'></img>
+            <label>아쉽게도 일치하는 여석이 없습니다.</label>
+          </div>
+        )}
       </div>
     </div>
   );
