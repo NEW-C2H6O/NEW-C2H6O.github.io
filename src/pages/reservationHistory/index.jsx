@@ -5,7 +5,11 @@ import { FilterBottomSheet } from "./componets/filterBottomSheet";
 import { SearchFilter } from "./componets/searchFilter";
 import { ReservationItem } from "./componets/reservationItem";
 
-import { useReservationHistoryDatePickerStore, useReservationHistoryStore } from "features";
+import {
+  useMemberStore,
+  useReservationHistoryDatePickerStore,
+  useReservationHistoryStore,
+} from "features";
 import { getDateParam, SORT_OPTIONS } from "shared";
 
 import axios from "axios";
@@ -21,21 +25,12 @@ function ReservationHistoryPage() {
     closeDatePicker,
   } = useReservationHistoryDatePickerStore();
 
-  const {
-    filter,
-    date,
-    setDate,
-    reservations, 
-    fetchFirstReservations,
-    fetchNextReservations, 
-    isLoading, 
-    sliceInfo
-  } = useReservationHistoryStore();
-
-  const [isLoading, setLoading] = useState(false);
+  const { filter, date, setDate, fetchFirstReservations, fetchNextReservations } =
+    useReservationHistoryStore();
   const [reservations, setReservations] = useState([]);
   const [sliceInfo, setSliceInfo] = useState(null);
-  
+  const [isLoading, setLoading] = useState(false);
+
   const { fetchMember } = useMemberStore();
 
   const containerRef = useRef(null);

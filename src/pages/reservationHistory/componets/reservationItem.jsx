@@ -1,10 +1,9 @@
 import { OTT_PLATFORMS_IMAGE_SRC } from "shared";
 import { useMemberStore, useReservationHistoryStore } from "features";
 
-import { deleteReservation } from "entities/reservation/api/deleteReservation";
-
 import styles from "../style/reservationItem.module.css";
 import { ReactComponent as DeleteIcon } from "shared/assets/icons/trash.svg";
+import { deleteReservation } from "entities/index";
 
 const formatTime = (dateString) => {
   const date = new Date(dateString);
@@ -32,8 +31,8 @@ function ReservationItem({ reservation }) {
       alert("예약이 삭제되었습니다.");
       removeReservation(reservationId);
     }
-  }
-  
+  };
+
   const memberId = reservation.member.memberId;
   const memberName = reservation.member.name;
   const ottName = reservation.ott.name;
@@ -46,10 +45,14 @@ function ReservationItem({ reservation }) {
         <div className={styles.name}>{memberName}</div>
         <div className={styles.infoRow}>
           <img className={styles.icon} src={OTT_PLATFORMS_IMAGE_SRC[ottName]} alt={ottName} />
-          <div className={styles.infoText}>{ottName} {profileName} · {formatTime(time.start)} - {formatTime(time.end)}</div>
+          <div className={styles.infoText}>
+            {ottName} {profileName} · {formatTime(time.start)} - {formatTime(time.end)}
+          </div>
         </div>
       </div>
-      { member?.memberId === memberId ? <DeleteIcon className={styles.deleteIcon} onClick={handleDelete} /> : null }
+      {member?.memberId === memberId ? (
+        <DeleteIcon className={styles.deleteIcon} onClick={handleDelete} />
+      ) : null}
     </div>
   );
 }

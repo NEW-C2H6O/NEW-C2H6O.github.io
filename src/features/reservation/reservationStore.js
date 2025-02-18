@@ -1,5 +1,4 @@
-import { getReservationList } from "entities/index";
-import { postReservation } from "entities/reservations";
+import { getReservationList, postReservation } from "entities/index";
 import {
   createDate,
   getDateParam,

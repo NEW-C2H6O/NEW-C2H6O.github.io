@@ -2,6 +2,7 @@ import styles from "./style/index.module.css";
 import { loginAPI } from "entities/index";
 
 function AuthPage() {
+  console.log(window.location.origin);
   const loginUrl = `${process.env.REACT_APP_API_URL}/auth/login?redirect=${window.location.origin}`;
 
   return (

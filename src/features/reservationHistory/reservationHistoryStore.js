@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getReservations } from "../../entities";
+import { getReservationList, getReservations } from "entities/index";
 
 const defaultState = {
   date: {
@@ -25,15 +25,10 @@ const useReservationHistoryStore = create((set, get) => ({
 
   //actions
   init: () => set({ ...defaultState }),
-  
+
   setDate: (year, month, date) => set({ date: { year, month, date } }),
-  
-  setFilter: ({
-    ottPlatforms,
-    ottProfiles,
-    sortOption,
-    myOnly,
-  }) => {
+
+  setFilter: ({ ottPlatforms, ottProfiles, sortOption, myOnly }) => {
     set({
       filter: {
         ottPlatforms,
@@ -44,10 +39,10 @@ const useReservationHistoryStore = create((set, get) => ({
     });
   },
 
-  fetchFirstReservations: async() => {
+  fetchFirstReservations: async () => {
     set({ isLoading: true });
     const { filter, date } = get();
-    const result = await getReservations(filter, date, null);
+    const result = await getReservationList(filter, date, null);
     set({
       reservations: result.content,
       sliceInfo: result.sliceInfo,
@@ -74,7 +69,7 @@ const useReservationHistoryStore = create((set, get) => ({
         (reservation) => reservation.reservationId !== reservationId
       ),
     });
-  }
+  },
 }));
 
 export { useReservationHistoryStore };
