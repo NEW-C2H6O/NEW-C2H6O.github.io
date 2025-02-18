@@ -6,10 +6,12 @@ import {
   ReservationPage,
   ReservationHistoryPage,
   SeatSearchPage,
+  SeatSearchFilterPage,
   CodeInputPage,
   AuthPage,
+  NotFoundPage
 } from "./pages/index.js";
-import { AppBar, NavigationBar } from "./widgets/index.js";
+import { AppBar, NavigationBar, ProtectedRoute } from './widgets/index.js';
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -19,7 +21,6 @@ import {
   faMagnifyingGlass,
   faCircleUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { SeatSearchFilterPage } from 'pages/seatSearchFilter.js';
 
 library.add(faHouse, faFile, faPlus, faMagnifyingGlass, faCircleUser);
 
@@ -37,12 +38,18 @@ function App() {
       <AppBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/reservation-history" element={<ReservationHistoryPage />} />
-        <Route path="/reservation" element={<ReservationPage />} />
-        <Route path="/seat-search" element={<SeatSearchPage />} />
-        <Route path='/seat-search-filter' element={<SeatSearchFilterPage />} />
         <Route path="/my" element={<MyPage />} />
         <Route path="/my/code-input" element={<CodeInputPage />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/reservation-history" element={<ReservationHistoryPage />} />
+          <Route path="/reservation" element={<ReservationPage />} />
+          <Route path="/seat-search" element={<SeatSearchPage />} />
+          <Route path="/seat-search-filter" element={<SeatSearchFilterPage />} />
+          <Route path="/my/code-input" element={<CodeInputPage />} />
+        </Route>
+
+        <Route path={"*"} element={<NotFoundPage/>}/>
       </Routes>
       <NavigationBar />
     </div>

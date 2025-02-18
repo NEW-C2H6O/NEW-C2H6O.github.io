@@ -4,21 +4,22 @@ import { CustomDatePicker } from 'widgets';
 import { GroupedDropdown } from './components/GroupedDropdown';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
-import { useOttOptionStore } from 'features/ott/ottOptionStroe';
+import { useOttOptionStore, useFilterStore } from 'features';
 
-function formatSearchTime(date, time) {
-  const result = new Date(date);
+const getAlertMessage = (date, start, end, otts) => {
+  if (!areAllSelected(date, start, end, otts)) {
+    return '모든 조건을 입력해야 합니다.';
+  }
 
-  result.setHours(time.getHours());
-  result.setMinutes(time.getMinutes());
-  result.setSeconds(0);
-  result.setMilliseconds(0);
+  if (!startIsFasterThanEnd(start, end)) {
+    return '시작 시간이 종료 시간보다 빨라야 합니다.';
+  }
 
-  return result;
-}
+  return null;
+};
 
-function areAllSelected(date, start, end, ott) {
-  return date !== null && start !== null && end !== null && ott !== null;
+function areAllSelected(date, start, end, otts) {
+  return date != null && start != null && end != null && otts != null;
 }
 
 function startIsFasterThanEnd(start, end) {
@@ -29,74 +30,43 @@ function startIsFasterThanEnd(start, end) {
 }
 
 function SeatSearchFilterPage() {
-  const { ottOptions, fetchOtts } = useOttOptionStore();
+  const { ottInfo, ottOptions, fetchOtts } = useOttOptionStore();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetchOtts();
+    setLoading(false);
   }, []);
 
-  const now = new Date(Date.now());
-  const [date, setDate] = useState(now);
-  const onSelectDate = (e) => {
-    setDate(e);
-  };
+  const {
+    date,
+    start,
+    end,
+    selectedOttOptions,
+    setDate,
+    setStart,
+    setEnd,
+    setOttOptionAndInfo,
+  } = useFilterStore();
+  const onSelectDate = (e) => setDate(e);
+  const onSelectStart = (e) => setStart(e);
+  const onSelectEnd = (e) => setEnd(e);
+  const onSelectOtt = (options) => setOttOptionAndInfo(options, ottInfo);
 
-  const [start, setStart] = useState(null);
-  const onSelectStart = (e) => {
-    e.setMinutes(Math.floor(e.getMinutes() / 10) * 10);
-    setStart(e);
-  };
-  const [end, setEnd] = useState(null);
-  const onSelectEnd = (e) => {
-    e.setMinutes(Math.floor(e.getMinutes() / 10) * 10);
-    setEnd(e);
-  };
-
-  const [ott, setOtt] = useState(null);
-  function onSelectOtt(e) {
-    setOtt(e);
-  }
-
-  const [completeSelect, setCompleteSelect] = useState(false);
-  useEffect(() => {
-    if (!areAllSelected(date, start, end, ott)) {
-      setCompleteSelect(false);
+  function onClickNavigationButton() {
+    const message = getAlertMessage(date, start, end, selectedOttOptions);
+    if (message != null) {
+      alert(message);
       return;
     }
 
-    if (!startIsFasterThanEnd(start, end)) {
-      setCompleteSelect(false);
-      return;
-    }
-
-    setCompleteSelect(true);
-  }, [date, start, end, ott]);
-
-  function handleNavigationButtonClick() {
-    if (!completeSelect) {
-      if (!areAllSelected(date, start, end, ott)) {
-        alert('모든 조건을 입력해야 합니다.');
-        return;
-      }
-
-      if (!startIsFasterThanEnd(start, end)) {
-        alert('시작 시간이 종료 시간보다 빨라야 합니다.');
-        return;
-      }
-
-      alert('알 수 없는 오류 발생');
-      return;
-    }
-
-    navigate('/seat-search', {
-      state: {
-        start: formatSearchTime(date, start),
-        end: formatSearchTime(date, end),
-        ott: ott,
-      },
-    });
+    navigate('/seat-search');
   }
 
   const navigate = useNavigate();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className='seat-search-filter-page'>
@@ -104,7 +74,7 @@ function SeatSearchFilterPage() {
         <div className='input-form'>
           <span>날짜 선택</span>
           <CustomDatePicker
-            defaultDate={now}
+            defaultDate={date}
             onSelectDate={onSelectDate}
             givenClassName={'date-input'}
           />
@@ -151,13 +121,12 @@ function SeatSearchFilterPage() {
           <GroupedDropdown
             groupedOptions={ottOptions}
             onSelectedOption={onSelectOtt}
+            defaultOptions={selectedOttOptions}
           />
         </div>
       </div>
 
-      <button
-        className='navigation-button'
-        onClick={() => handleNavigationButtonClick()}>
+      <button className='navigation-button' onClick={onClickNavigationButton}>
         검색
       </button>
     </div>

@@ -10,8 +10,8 @@ const useSeatStore = create((set, get) => ({
 
   //actions
   init: () => set({ ...defaultState }),
-  fetchSeats: async ({ ott, start, end }) => {
-    const data = (await getSeats(ott, start, end)).data
+  fetchSeats: async ({ otts, start, end }) => {
+    const data = (await getSeats(otts, start, end)).data
     set({ seats: data })
   },
 }));

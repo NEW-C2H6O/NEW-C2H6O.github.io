@@ -21,11 +21,22 @@ function ReservationHistoryPage() {
     closeDatePicker,
   } = useReservationHistoryDatePickerStore();
 
-  const { filter, date, setDate } = useReservationHistoryStore();
+  const {
+    filter,
+    date,
+    setDate,
+    reservations, 
+    fetchFirstReservations,
+    fetchNextReservations, 
+    isLoading, 
+    sliceInfo
+  } = useReservationHistoryStore();
 
   const [isLoading, setLoading] = useState(false);
   const [reservations, setReservations] = useState([]);
   const [sliceInfo, setSliceInfo] = useState(null);
+  
+  const { fetchMember } = useMemberStore();
 
   const containerRef = useRef(null);
 
@@ -84,16 +95,20 @@ function ReservationHistoryPage() {
     const { scrollHeight, scrollTop, clientHeight } = event.target;
     const bottom = Math.abs(scrollHeight - (scrollTop + clientHeight)) < 1;
     if (bottom && !isLoading && !sliceInfo.last) {
-      fetchReservations(reservations);
+      fetchNextReservations();
     }
   };
 
   useEffect(() => {
-    fetchReservations([]);
+    fetchFirstReservations();
     if (containerRef?.current) {
       containerRef.current.scrollTop = 0;
     }
-  }, [filter, date]);
+  }, [filter, date, fetchFirstReservations]);
+
+  useEffect(() => {
+    fetchMember();
+  }, [fetchMember]);
 
   return (
     <div className={styles.container}>

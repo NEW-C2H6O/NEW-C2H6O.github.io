@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import { ReactComponent as RightIcon } from "shared/assets/icons/navigate/right.svg";
+import { ReactComponent as RightIcon } from 'shared/assets/icons/navigate/right.svg';
+import { useActiveStore } from 'features';
 
 function MyPage() {
   const [member, setMember] = useState({ name: "", nameAndTag: "" });
@@ -36,6 +37,11 @@ function MyPage() {
     fetchMyInfo();
   }, []);
 
+  const { isActive, fetchActive } = useActiveStore();
+  useEffect(() => {
+    fetchActive();
+  }, []);
+
   return (
     <div className={styles.container}>
       <section className={styles.profileSection}>
@@ -58,7 +64,7 @@ function MyPage() {
         </Link>
         <Link to="/my/code-input" className={styles.menuItem}>
           이번 학기 코드 입력
-          <RightIcon />
+          {!isActive ? <RightIcon /> : <span>인증완료</span>}
         </Link>
         <div onClick={fetchLogout} className={styles.menuItem}>
           로그아웃
