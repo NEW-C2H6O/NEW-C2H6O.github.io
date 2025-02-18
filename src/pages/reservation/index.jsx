@@ -9,7 +9,12 @@ import { InputTime } from "./components/input.time";
 import { useReservationStore } from "features";
 
 function ReservationPage() {
-  const { setSelectedDate, isDatePickerOpen: isOpen, closeDatePicker } = useReservationStore();
+  const {
+    setSelectedDate,
+    isDatePickerOpen: isOpen,
+    closeDatePicker,
+    tryReservation,
+  } = useReservationStore();
 
   return (
     <div className={styles.container}>
@@ -30,7 +35,9 @@ function ReservationPage() {
       <div className={styles.inputFormList}>
         <InputContainer title={"시간 선택"} InputField={InputTime} />
       </div>
-      <div className={styles.submitButton}>예약하기</div>
+      <div className={styles.submitButton} onClick={tryReservation}>
+        예약하기
+      </div>
     </div>
   );
 }
