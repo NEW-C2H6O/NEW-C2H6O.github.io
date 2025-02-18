@@ -1,5 +1,13 @@
 import { getReservationList } from "entities/index";
-import { getDateParam, OTT_ID, OTT_PROFILE_ID, timeToReservationIdx } from "shared";
+import { postReservation } from "entities/reservations";
+import {
+  createDate,
+  getDateParam,
+  OTT_ID,
+  OTT_PROFILE_ID,
+  reservationIdxToTime,
+  timeToReservationIdx,
+} from "shared";
 import { create } from "zustand";
 
 const defaultState = {
@@ -28,7 +36,7 @@ const useReservationStore = create((set, get) => ({
   closeDatePicker: () => set({ isDatePickerOpen: false }),
 
   setSelectedDate: (year, month, date) => {
-    get().initSelectedTime({});
+    get().initSelectedTime({ date: { year, month, date } });
     return set({ selectedDate: { year, month, date } });
   },
 
@@ -42,7 +50,11 @@ const useReservationStore = create((set, get) => ({
     set({ selectedProfile: profile });
   },
 
-  initSelectedTime: async ({ ott = get().selectedOTT, profile = get().selectedProfile }) => {
+  initSelectedTime: async ({
+    date = get().selectedDate,
+    ott = get().selectedOTT,
+    profile = get().selectedProfile,
+  }) => {
     if (ott === null || profile === null) return;
 
     const newIsReservedTime = Array.from({ length: 24 * 6 }, () => false);
@@ -50,7 +62,7 @@ const useReservationStore = create((set, get) => ({
     const reservationList = await getReservationList({
       ottId: OTT_ID[ott],
       profileId: OTT_PROFILE_ID[ott][profile],
-      date: getDateParam(get().selectedDate),
+      date: getDateParam(date),
     });
 
     reservationList.forEach(({ start, end }) => {
@@ -139,6 +151,19 @@ const useReservationStore = create((set, get) => ({
         stTimeIdx: timeIdx,
         edTimeIdx: timeIdx,
       },
+    });
+  },
+
+  tryReservation: () => {
+    if (!get().selectedOTT) return;
+    if (!get().selectedProfile) return;
+    if (!get().selectedTime.stTimeIdx) return;
+
+    postReservation({
+      ottId: OTT_ID[get().selectedOTT],
+      profileId: OTT_PROFILE_ID[get().selectedOTT][get().selectedProfile],
+      startTime: reservationIdxToTime(createDate(get().selectedDate), get().selectedTime.stTimeIdx),
+      endTime: reservationIdxToTime(createDate(get().selectedDate), get().selectedTime.edTimeIdx),
     });
   },
 }));

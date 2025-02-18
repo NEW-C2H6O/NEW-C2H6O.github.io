@@ -1,1 +1,1 @@
-export * from "./api/getReservationList.js";
+export * from "./api/getReservationList";
