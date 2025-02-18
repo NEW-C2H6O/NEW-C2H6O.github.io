@@ -10,6 +10,10 @@ export const getMe = async () => {
 
     return response.data;
   } catch (error) {
+    if (error.response?.status === 401) {
+      return { data: undefined };
+    }
+
     throw new Error('Failed to fetch seats');
   }
 };
