@@ -1,3 +1,2 @@
 export * from "./auth/index";
-export * from "./reservation/api/getReservations";
-export * from "./reservation/api/deleteReservation";
+export * from "./ott/index";
