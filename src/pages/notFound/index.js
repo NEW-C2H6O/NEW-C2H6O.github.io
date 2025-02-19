@@ -7,7 +7,7 @@ function NotFoundPage() {
   return (
     <div className='background'>
       <div className='components'>
-        <img src='images/pictogram/notFoundLabel.png' width={400}></img>
+        <img src='images/pictogram/notFoundLabel.png' width='100%'></img>
         <label>죄송합니다. 요청하신 페이지를 찾을 수 없습니다.</label>
         <div
           style={{
