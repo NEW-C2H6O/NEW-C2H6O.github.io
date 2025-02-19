@@ -27,6 +27,8 @@ label {
 }
 
 .back-button {
+  width: 40%;
+
   border: none;
 
   font-size: 20px;
@@ -35,5 +37,6 @@ label {
   color: #16573f;
   text-shadow: 2px 2px 4px #666;
 
-  padding: 40px;
+  padding: auto;
+  margin-top: 20%;
 }
