@@ -7,3 +7,4 @@ export * from './seatSearchFilter/index';
 export * from './codeInput/index';
 export * from './auth/index';
 export * from './notFound/index';
+export * from './error/index';
