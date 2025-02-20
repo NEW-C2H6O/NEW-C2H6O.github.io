@@ -1,12 +1,11 @@
 .background {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
 
-  background-image: url(../../../public/images/background/grayPaper.png);
+  background-image: url(../../../../public/images/background/grayPaper.png);
 }
 
-#container {
-  height: 100vh;
+.nf-container {
   width: 100%;
 
   position: absolute;
@@ -20,23 +19,23 @@
   row-gap: 8vh;
 }
 
-#label-container {
+.nf-label-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2vh;
 }
 
-#label-container>div {
+.nf-label-container>div {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0px;
 }
 
-#bold-label {
+.nf-bold-label {
   font-size: 18px;
-  font-weight: bolder;
+  font-weight: bold;
 }
 
 label {
@@ -44,7 +43,7 @@ label {
   color: #616161;
 }
 
-#back-button {
+.nf-back-button {
   border: none;
 
   font-size: 20px;
