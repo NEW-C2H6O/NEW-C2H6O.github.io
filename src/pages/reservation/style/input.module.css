@@ -54,7 +54,7 @@
     .text {
       flex-shrink: 0;
       height: 35px;
-      display: flex;
+      display: flex !important;
       align-items: center;
 
       font-size: 1rem;
