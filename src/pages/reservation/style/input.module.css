@@ -24,7 +24,7 @@
   font-size: 1rem;
   box-sizing: border-box;
 
-  display: flex !important;
+  display: flex;
   align-items: center;
   padding-left: 10px;
 
@@ -38,79 +38,79 @@
   background-color: #ffffff;
   padding: 10px;
 
-  display: flex !important;
+  display: flex;
 
   justify-content: space-around;
 
   overflow: scroll;
+}
 
-  .timeLegend {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.timeLegend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    margin-top: 28px;
+  margin-top: 28px;
+}
 
-    .text {
-      flex-shrink: 0;
-      height: 35px;
-      display: flex !important;
-      align-items: center;
+.timeText {
+  flex-shrink: 0;
+  height: 35px;
+  display: flex;
+  align-items: center;
 
-      font-size: 1rem;
-      color: #000000;
-      border: 0.5px solid transparent;
-    }
-  }
+  font-size: 1rem;
+  color: #000000;
+  border: 0.5px solid transparent;
+}
 
-  .inputBox {
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    width: 80%;
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+}
 
-    .minuteLegend {
-      display: flex !important;
-      justify-content: space-between;
-      width: 100%;
+.minuteLegend {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 
-      .text {
-        height: 28px;
-        display: flex;
-        align-items: center;
+.minuteText {
+  height: 28px;
+  display: flex;
+  align-items: center;
 
-        font-size: 1rem;
-        color: #000000;
-      }
-    }
+  font-size: 1rem;
+  color: #000000;
+}
 
-    .itemRow {
-      margin: -0.5px 10px;
-      display: flex !important;
-      width: 100%;
-      box-sizing: border-box;
-      border-top: solid 1px #dddddd;
-      border-bottom: solid 1px #dddddd;
+.itemRow {
+  margin: -0.5px 10px;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  border-top: solid 1px #dddddd;
+  border-bottom: solid 1px #dddddd;
+}
 
-      .item {
-        width: 20%;
-        height: 36px;
+.item {
+  width: 20%;
+  height: 36px;
 
-        border-left: dashed 1px #dddddd;
-        border-right: dashed 1px #dddddd;
+  border-left: dashed 1px #dddddd;
+  border-right: dashed 1px #dddddd;
 
-        margin: -0.5px;
-      }
+  margin: -0.5px;
+}
 
-      .item:first-child {
-        border-left: solid 1px #000000;
-      }
-      .item:nth-child(4) {
-        border-left: solid 1px #000000;
-      }
-      .item:last-child {
-        border-right: solid 1px #000000;
-      }
-    }
-  }
+.item:first-child {
+  border-left: solid 1px #000000;
+}
+.item:nth-child(4) {
+  border-left: solid 1px #000000;
+}
+.item:last-child {
+  border-right: solid 1px #000000;
 }

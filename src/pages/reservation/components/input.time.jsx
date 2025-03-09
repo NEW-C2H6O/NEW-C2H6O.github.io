@@ -14,7 +14,7 @@ function InputTime() {
       <div className={styles.timeLegend}>
         {Array.from({ length: 24 }, (_, i) => {
           return (
-            <div key={i} className={styles.text}>
+            <div key={i} className={styles.timeText}>
               {i.toString().padStart(2, "0")}
             </div>
           );
@@ -22,9 +22,9 @@ function InputTime() {
       </div>
       <div className={styles.inputBox}>
         <div className={styles.minuteLegend}>
-          <div className={styles.text}>00</div>
-          <div className={styles.text}>30</div>
-          <div className={styles.text}>60</div>
+          <div className={styles.minuteText}>00</div>
+          <div className={styles.minuteText}>30</div>
+          <div className={styles.minuteText}>60</div>
         </div>
         {Array.from({ length: 24 }, (_, i) => {
           return (
