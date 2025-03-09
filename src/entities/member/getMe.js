@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const getMe = async () => {
   try {
@@ -8,8 +8,12 @@ export const getMe = async () => {
       withCredentials: true,
     });
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
-    throw new Error('Failed to fetch seats');
+    if (error.response?.status === 401) {
+      return null;
+    }
+
+    throw new Error("Failed to fetch seats");
   }
 };

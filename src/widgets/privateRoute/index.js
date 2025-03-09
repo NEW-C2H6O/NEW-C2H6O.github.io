@@ -3,16 +3,17 @@ import { useEffect } from "react";
 import { useMemberStore } from "features";
 import { LoadingPage } from "pages";
 
-function ProtectedRoute() {
-  const { member } = useMemberStore();
+function PrivateRoute() {
+  const { member, fetchMember } = useMemberStore();
   useEffect(() => {
-    if (!member) return;
-    console.log(member);
-    if (!member.isActivated) document.location = "/my/code-input";
-  }, [member]);
+    fetchMember().then((res) => {
+      if (res) return;
+      document.location = "/auth";
+    });
+  }, []);
 
   if (member == null) return <LoadingPage />;
   return <Outlet />;
 }
 
-export { ProtectedRoute };
+export { PrivateRoute };
