@@ -9,7 +9,7 @@ export const getSeats = async (otts, start, end) => {
 
     if (otts.length != 0) {
       for (const ott of otts) {
-        url += `&ott=${ott.id}_${ott.profiles.join('-')}`;
+        url += `&ott=${ott.id}_${ott.profiles.map((profile) => profile.id).join('-')}`;
       }
     }
 

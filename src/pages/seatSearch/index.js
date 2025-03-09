@@ -39,10 +39,10 @@ function formatOtt(otts) {
   }
 
   if (otts.length === 1) {
-    return `${otts[0].name} ${otts[0].profiles.join(', ')}번`;
+    return `${otts[0].name} ${otts[0].profiles.map((profile) => profile.number).join(', ')}번`;
   }
 
-  return `${otts[0].name} ${otts[0].profiles.join(', ')}번 외 ${
+  return `${otts[0].name} ${otts[0].profiles.map((profile) => profile.number).join(', ')}번 외 ${
     otts.length - 1
   }`;
 }
@@ -55,7 +55,7 @@ function existSeats(seats) {
   if (seats.length == 0) {
     return false;
   }
-  
+
   return true;
 }
 
@@ -65,6 +65,7 @@ function SeatSearchPage() {
   useEffect(() => {
     if ((start != null) & (end != null)) {
       setConditionExist(true);
+      console.log(selectedOttInfo);
     }
   }, []);
 
@@ -72,7 +73,6 @@ function SeatSearchPage() {
   useEffect(() => {
     if (conditionExist) {
       fetchSeats({ otts: selectedOttInfo, start: start, end: end });
-      console.log(seats)
     }
   }, [conditionExist, selectedOttInfo, start, end]);
 
