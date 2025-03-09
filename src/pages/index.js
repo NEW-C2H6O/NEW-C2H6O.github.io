@@ -8,3 +8,4 @@ export * from "./codeInput/index";
 export * from "./auth/index";
 export * from "./notFound/index";
 export * from "./loading/index";
+export * from './error/index';
