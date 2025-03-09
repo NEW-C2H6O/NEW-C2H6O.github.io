@@ -70,7 +70,7 @@
     width: 80%;
 
     .minuteLegend {
-      display: flex;
+      display: flex !important;
       justify-content: space-between;
       width: 100%;
 
@@ -86,7 +86,7 @@
 
     .itemRow {
       margin: -0.5px 10px;
-      display: flex;
+      display: flex !important;
       width: 100%;
       box-sizing: border-box;
       border-top: solid 1px #dddddd;
