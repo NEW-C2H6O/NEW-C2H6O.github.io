@@ -1,14 +1,18 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { useActiveStore } from 'features/member/activeStore';
-import { useEffect } from 'react';
+import { Navigate, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { useMemberStore } from "features";
+import { LoadingPage } from "pages";
 
 function ProtectedRoute() {
-  const { isAvtice, fetchActive } = useActiveStore();
+  const { member } = useMemberStore();
   useEffect(() => {
-    fetchActive();
-  }, []);
+    if (!member) return;
+    console.log(member);
+    if (!member.isActivated) document.location = "/my/code-input";
+  }, [member]);
 
-  return !isAvtice ? <Outlet /> : <Navigate to='/my/code-input' />;
+  if (member == null) return <LoadingPage />;
+  return <Outlet />;
 }
 
 export { ProtectedRoute };

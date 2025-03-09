@@ -1,8 +1,8 @@
-import { create } from 'zustand';
-import { getMe } from 'entities/member/getMe';
+import { create } from "zustand";
+import { getMe } from "entities/member/getMe";
 
 const defaultState = {
-  member: null
+  member: null,
 };
 
 const useMemberStore = create((set, get) => ({
@@ -11,8 +11,11 @@ const useMemberStore = create((set, get) => ({
   init: () => set({ ...defaultState }),
 
   fetchMember: async () => {
-    set({ member: (await getMe()).data });
-  }
-}))
+    const member = await getMe();
+    if (!member) return false;
+    set({ member });
+    return true;
+  },
+}));
 
 export { useMemberStore };

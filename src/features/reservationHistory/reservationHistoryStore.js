@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { getReservationList, getReservations } from "entities/index";
+import { getReservations } from "entities/index";
+import { getDateParam } from "shared";
 
 const defaultState = {
   date: {
@@ -42,7 +43,7 @@ const useReservationHistoryStore = create((set, get) => ({
   fetchFirstReservations: async () => {
     set({ isLoading: true });
     const { filter, date } = get();
-    const result = await getReservationList(filter, date, null);
+    const result = await getReservations(filter, date, null);
     set({
       reservations: result.content,
       sliceInfo: result.sliceInfo,

@@ -1,32 +1,32 @@
 .container {
   width: 100%;
-  padding: 0 6vw;
+  padding: 0 24px;
   box-sizing: border-box;
 
   display: flex;
 
   overflow: auto;
   white-space: nowrap;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
 }
 
 .container::-webkit-scrollbar {
-  display: none; /* WebKit */
+  display: none;
 }
 
 .item {
-  padding: 1svh 3vw;
-  border-radius: 1.8svh;
-  font-size: 1.6svh;
-  margin-right: 2.5vw;
+  padding: 8.5px 12px;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  margin-right: 10px;
+  border: solid 1px #dddddd;
 }
 
 .selected {
-  border: solid 0.11svh #dddddd;
   background-color: #dddddd;
   color: #3b3b3b;
 }
 .notSelected {
-  border: solid 0.11svh #dddddd;
+  background-color: #ffffff;
   color: #616161;
 }
