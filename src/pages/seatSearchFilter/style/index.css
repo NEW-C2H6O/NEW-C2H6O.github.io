@@ -19,6 +19,12 @@
 }
 
 .input-form {
+  padding: 10px;
+  padding-left: calc(10px + 27px);
+  padding-right: calc(10px + 27px);
+
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
   gap: 6px;
