@@ -13,7 +13,7 @@ const defaultState = {
     ottPlatforms: [0, 1, 2],
     ottProfiles: [],
     sortOption: 0,
-    myOnly: true,
+    myOnly: false,
   },
 
   reservations: [],
@@ -35,6 +35,15 @@ const useReservationHistoryStore = create((set, get) => ({
         ottPlatforms,
         ottProfiles,
         sortOption,
+        myOnly,
+      },
+    });
+  },
+
+  setMyOnly: (myOnly) => {
+    set({
+      filter: {
+        ...get().filter,
         myOnly,
       },
     });

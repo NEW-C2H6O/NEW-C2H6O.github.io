@@ -16,6 +16,29 @@ function ReservationPage() {
     tryReservation,
   } = useReservationStore();
 
+  async function reserve() {
+    tryReservation().then((result) => {
+      switch (result) {
+        case 0:
+          alert("예약이 완료되었습니다.");
+          window.location.href = "/reservation-history";
+          return;
+        case 1:
+          alert("예약이 이미 존재합니다.");
+          return;
+        case 2:
+          alert("OTT 플랫폼을 선택해주세요.");
+          return;
+        case 3:
+          alert("프로필을 선택해주세요.");
+          return;
+        case 4:
+          alert("시간을 선택해주세요.");
+          return;
+      }
+    });
+  }
+
   return (
     <div className={styles.container}>
       <DatePickerBottomSheet
@@ -35,7 +58,7 @@ function ReservationPage() {
       <div className={styles.inputFormList}>
         <InputContainer title={"시간 선택"} InputField={InputTime} />
       </div>
-      <div className={styles.submitButton} onClick={tryReservation}>
+      <div className={styles.submitButton} onClick={reserve}>
         예약하기
       </div>
     </div>

@@ -9,28 +9,11 @@
   align-items: center;
 }
 
-.cameraImage {
+.backgroundImage {
   width: 100%;
 
   position: absolute;
   bottom: 0;
-}
-
-.logoSection {
-  position: absolute;
-  top: 192px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .logo {
-    width: 150px;
-  }
-
-  .logoText {
-    width: 238px;
-  }
 }
 
 .loginButton {
@@ -39,7 +22,7 @@
 
   display: flex;
   align-items: center;
-  padding: 13px 86px;
+  padding: 13px 66px;
 
   background-color: #fee500;
   border-radius: 2px;

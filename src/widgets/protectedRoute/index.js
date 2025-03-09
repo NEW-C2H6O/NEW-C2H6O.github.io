@@ -7,7 +7,6 @@ function ProtectedRoute() {
   const { member } = useMemberStore();
   useEffect(() => {
     if (!member) return;
-    console.log(member);
     if (!member.isActivated) document.location = "/my/code-input";
   }, [member]);
 

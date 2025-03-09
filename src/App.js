@@ -9,9 +9,10 @@ import {
   SeatSearchFilterPage,
   CodeInputPage,
   AuthPage,
-  NotFoundPage
+  NotFoundPage,
+  ErrorPage,
 } from "./pages/index.js";
-import { AppBar, NavigationBar, ProtectedRoute, PrivateRoute } from './widgets/index.js';
+import { AppBar, NavigationBar, ProtectedRoute, PrivateRoute } from "./widgets/index.js";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -20,7 +21,7 @@ import {
   faPlus,
   faMagnifyingGlass,
   faCircleUser,
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
 library.add(faHouse, faFile, faPlus, faMagnifyingGlass, faCircleUser);
 
@@ -33,15 +34,20 @@ function App() {
       </div>
     );
 
+  window.onunhandledrejection = function (event) {
+    console.error("Unhandled Promise Rejection:", event.reason);
+    window.location.href = "/error"; // 에러 페이지로 이동
+  };
+
   return (
     <div className="App" style={{ height: window.innerHeight }}>
       <AppBar />
       <Routes>
+        <Route path="/error" element={<ErrorPage />} />
         <Route element={<PrivateRoute />}>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/my' element={<MyPage />} />
-          <Route path='/my/code-input' element={<CodeInputPage />} />
-
+          <Route path="/" element={<HomePage />} />
+          <Route path="/my" element={<MyPage />} />
+          <Route path="/my/code-input" element={<CodeInputPage />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/reservation-history" element={<ReservationHistoryPage />} />
             <Route path="/reservation" element={<ReservationPage />} />
@@ -50,8 +56,7 @@ function App() {
             <Route path="/my/code-input" element={<CodeInputPage />} />
           </Route>
         </Route>
-
-        <Route path={"*"} element={<NotFoundPage/>}/>
+        <Route path={"*"} element={<NotFoundPage />} />
       </Routes>
       <NavigationBar />
     </div>
