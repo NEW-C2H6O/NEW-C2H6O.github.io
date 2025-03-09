@@ -1,4 +1,4 @@
-import { SORT_OPTIONS } from "shared";
+import { OTT_ID, OTT_PLATFORMS, OTT_PROFILE_ID, SORT_OPTIONS } from "shared";
 
 import axios from "axios";
 
@@ -14,30 +14,29 @@ const getSortParam = (idx) => {
   }
 
   return "reservationId,asc";
-}
+};
 
 const getOttParam = (filter) => {
-  if (filter.ottPlatforms.length === 0) {
-    return null;
-  }
+  if (filter.ottPlatforms.length === 0) return null;
 
-  const otts = filter.ottPlatforms.map(value => value + 1);
-  const profiles = filter.ottProfiles.map(value => value + 1);
+  if (filter.ottPlatforms.length > 1)
+    return filter.ottPlatforms.map((v) => OTT_ID[OTT_PLATFORMS[v]]).join(",");
 
-  if (otts.length >= 2) {
-    return otts.join(",");
-  }
+  const ott = OTT_ID[OTT_PLATFORMS[filter.ottPlatforms[0]]];
+  const profiles = filter.ottProfiles.map(
+    (v) => OTT_PROFILE_ID[OTT_PLATFORMS[filter.ottPlatforms[0]]][v]
+  );
 
-  return `${otts[0]}_${profiles.join("-")}`;
-}
+  return `${ott}_${profiles.join("-")}`;
+};
 
 const getDateParam = (date) => {
-  const year = date.year
-  const month = String(date.month).padStart(2, '0')
-  const day = String(date.date).padStart(2, '0');
+  const year = date.year;
+  const month = String(date.month).padStart(2, "0");
+  const day = String(date.date).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
-}
+};
 
 const getParams = (filter, date, cursor) => {
   const sortParam = getSortParam(filter.sortOption);
@@ -50,9 +49,9 @@ const getParams = (filter, date, cursor) => {
     date: dateParam,
     ...(sortParam && { sort: sortParam }),
     ...(ottParam && { ott: ottParam }),
-    ...(cursor && { cursor: cursor })
+    ...(cursor && { cursor: cursor }),
   });
-}
+};
 
 const getReservations = async (filter, date, cursor) => {
   const API_URL = process.env.REACT_APP_API_URL;
@@ -65,6 +64,6 @@ const getReservations = async (filter, date, cursor) => {
     console.error(error);
     return [];
   }
-}
+};
 
 export { getReservations };
