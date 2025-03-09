@@ -4,17 +4,19 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { ReactComponent as RightIcon } from "shared/assets/icons/navigate/right.svg";
+import { useReservationHistoryStore } from "features";
 
 function MyPage() {
   const [member, setMember] = useState({ name: "", nameAndTag: "" });
   const navigate = useNavigate();
+
+  const { setMyOnly } = useReservationHistoryStore();
 
   const fetchMyInfo = async () => {
     const API_URL = process.env.REACT_APP_API_URL;
     try {
       const result = await axios.get(`${API_URL}/members/me`, { withCredentials: true });
       const member = result.data.data;
-      console.log(member);
       setMember(member);
     } catch (error) {
       console.error(error);
@@ -54,7 +56,13 @@ function MyPage() {
       <div style={{ height: "6px" }} />
 
       <section className={styles.menuSection}>
-        <Link to="/reservation-history" className={styles.menuItem}>
+        <Link
+          to="/reservation-history"
+          className={styles.menuItem}
+          onClick={() => {
+            setMyOnly(true);
+          }}
+        >
           내 예약 내역
           <RightIcon />
         </Link>
