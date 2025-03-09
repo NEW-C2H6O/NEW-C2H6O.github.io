@@ -18,10 +18,14 @@ async function postReservation({ ottId, profileId, startTime, endTime }) {
       }
     );
 
-    return response.data.data;
+    return true;
   } catch (error) {
-    console.log(error);
-    throw new Error("Failed to fetch seats");
+    switch (error.response.data.status) {
+      case 409:
+        return false;
+      default:
+        throw error;
+    }
   }
 }
 

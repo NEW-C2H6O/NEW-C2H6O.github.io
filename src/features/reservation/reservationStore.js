@@ -71,7 +71,7 @@ const useReservationStore = create((set, get) => ({
       for (let timeIdx = stIdx; timeIdx <= edIdx; timeIdx++) newIsReservedTime[timeIdx] = true;
     });
 
-    set({ isReservedTime: newIsReservedTime });
+    set({ isReservedTime: newIsReservedTime, selectedTime: defaultState.selectedTime });
   },
 
   setSelectedTime: (timeIdx) => {
@@ -153,17 +153,24 @@ const useReservationStore = create((set, get) => ({
     });
   },
 
-  tryReservation: () => {
-    if (!get().selectedOTT) return;
-    if (!get().selectedProfile) return;
-    if (!get().selectedTime.stTimeIdx) return;
+  //0 : 성공
+  //1 : 예약 존재
+  //2 : OTT 미선택
+  //3 : 프로필 미선택
+  //4 : 시간 미선택
+  tryReservation: async () => {
+    if (!get().selectedOTT) return 2;
+    if (!get().selectedProfile) return 3;
+    if (!get().selectedTime.stTimeIdx) return 4;
 
-    postReservation({
+    return (await postReservation({
       ottId: OTT_ID[get().selectedOTT],
       profileId: OTT_PROFILE_ID[get().selectedOTT][get().selectedProfile],
       startTime: reservationIdxToTime(createDate(get().selectedDate), get().selectedTime.stTimeIdx),
       endTime: reservationIdxToTime(createDate(get().selectedDate), get().selectedTime.edTimeIdx),
-    });
+    }))
+      ? 0
+      : 1;
   },
 }));
 
