@@ -6,6 +6,7 @@
   flex-direction: column;
   align-items: flex-start;
 
-  background-color: #f9f9f9;
+  background-image: url(../../../../public/images/background/home.jpg);
+  background-size: 100% calc(100% - 60px);
   font-family: Arial, sans-serif;
 }
