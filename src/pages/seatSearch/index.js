@@ -60,7 +60,7 @@ function SeatSearchPage() {
   useEffect(() => {
     if (conditionExist)
       fetchSeats({ otts: selectedOttInfo, start: start, end: end });
-  }, [selectedOttInfo, start, end]);
+  }, [conditionExist, selectedOttInfo, start, end]);
 
   const navigate = useNavigate();
 
