@@ -47,6 +47,18 @@ function formatOtt(otts) {
   }`;
 }
 
+function existSeats(seats) {
+  if (seats == null) {
+    return false;
+  }
+
+  if (seats.length == 0) {
+    return false;
+  }
+  
+  return true;
+}
+
 function SeatSearchPage() {
   const { start, end, selectedOttInfo } = useFilterStore();
   const [conditionExist, setConditionExist] = useState(false);
@@ -58,8 +70,10 @@ function SeatSearchPage() {
 
   const { seats, fetchSeats } = useSeatStore();
   useEffect(() => {
-    if (conditionExist)
+    if (conditionExist) {
       fetchSeats({ otts: selectedOttInfo, start: start, end: end });
+      console.log(seats)
+    }
   }, [conditionExist, selectedOttInfo, start, end]);
 
   const navigate = useNavigate();
@@ -76,7 +90,7 @@ function SeatSearchPage() {
       </div>
 
       <div className='search-list'>
-        {conditionExist ? (
+        {conditionExist && existSeats(seats) ? (
           seats.map((seat) => {
             return <SeatItem seat={seat} />;
           })
