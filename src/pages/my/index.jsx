@@ -34,7 +34,7 @@ function MyPage() {
     useFilterStore.persist.clearStorage();    // zustand persist로 영속화한 데이터 제거
     clear();
     alert("로그아웃 되었습니다.");
-    navigate("/");
+    navigate("/auth");
   };
 
   useEffect(() => {
