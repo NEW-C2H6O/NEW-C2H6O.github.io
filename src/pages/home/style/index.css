@@ -35,18 +35,20 @@
   background-size: 100%;
 }
 
-.label-container {
+.content-container {
   position: absolute;
   top: 40%;
-
-  width: 100%;
-  
   
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
+}
 
+.labels {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .home-logo {
