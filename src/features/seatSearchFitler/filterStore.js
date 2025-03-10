@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
 const defaultState = {
-  date: new Date(Date.now()),
+  date: new Date(Date.now()).toISOString(),
   start: null,
   end: null,
   selectedOttOptions: [],
@@ -116,10 +116,13 @@ const useFilterStore = create(
 
       //actions
       init: () => set({ ...defaultState }),
-      setDate: (date) => set({ date: date }),
-      setStart: (start) => set({ start: formatSearchTime(get().date, start) }),
-      setEnd: (end) => set({ end: formatSearchTime(get().date, end) }),
+      setDate: (date) => set({ date: date == null ? new Date(Date.now()).toISOString() : date.toISOString() }),
+      setStart: (start) => set({ start: formatSearchTime(new Date(get().date), start) }),
+      setEnd: (end) => set({ end: formatSearchTime(new Date(get().date), end) }),
       setOttOptionAndInfo: (options, otts) => set({ selectedOttOptions: options == null ? [] : options, selectedOttInfo: formatOptions(options, otts) }),
+      getDate: () => new Date(get().date),
+      getStart: () => new Date(get().start),
+      getEnd: () => new Date(get().end),
     }),
     {
       name: "seat-search-filer",

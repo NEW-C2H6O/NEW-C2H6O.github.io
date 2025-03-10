@@ -60,21 +60,20 @@ function existSeats(seats) {
 }
 
 function SeatSearchPage() {
-  const { start, end, selectedOttInfo } = useFilterStore();
+  const { getStart, getEnd, selectedOttInfo } = useFilterStore();
   const [conditionExist, setConditionExist] = useState(false);
   useEffect(() => {
-    if ((start != null) & (end != null)) {
+    if ((getStart() != null) & (getEnd() != null)) {
       setConditionExist(true);
-      console.log(selectedOttInfo);
     }
   }, []);
 
   const { seats, fetchSeats } = useSeatStore();
   useEffect(() => {
     if (conditionExist) {
-      fetchSeats({ otts: selectedOttInfo, start: start, end: end });
+      fetchSeats({ otts: selectedOttInfo, start: getStart(), end: getEnd() });
     }
-  }, [conditionExist, selectedOttInfo, start, end]);
+  }, [conditionExist]);
 
   const navigate = useNavigate();
 
@@ -82,8 +81,8 @@ function SeatSearchPage() {
     <div className='seat-search-page'>
       <div className='search-section'>
         <SearchButton
-          date={formatDate(start)}
-          time={formatTimePair(start, end)}
+          date={formatDate(getStart())}
+          time={formatTimePair(getStart(), getEnd())}
           ott={formatOtt(selectedOttInfo)}
           onClickButton={() => navigate(-1)}
         />

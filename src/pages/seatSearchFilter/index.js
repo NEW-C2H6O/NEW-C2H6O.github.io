@@ -38,14 +38,14 @@ function SeatSearchFilterPage() {
   }, []);
 
   const {
-    date,
-    start,
-    end,
+    getStart,
+    getEnd,
     selectedOttOptions,
     setDate,
     setStart,
     setEnd,
     setOttOptionAndInfo,
+    getDate
   } = useFilterStore();
   const onSelectDate = (e) => setDate(e);
   const onSelectStart = (e) => setStart(e);
@@ -53,7 +53,7 @@ function SeatSearchFilterPage() {
   const onSelectOtt = (options) => setOttOptionAndInfo(options, ottInfo);
 
   function onClickNavigationButton() {
-    const message = getAlertMessage(date, start, end, selectedOttOptions);
+    const message = getAlertMessage(getDate(), getStart(), getEnd(), selectedOttOptions);
     if (message != null) {
       alert(message);
       return;
@@ -74,7 +74,7 @@ function SeatSearchFilterPage() {
         <div className='input-form'>
           <span>날짜 선택</span>
           <CustomDatePicker
-            defaultDate={date}
+            defaultDate={getDate()}
             onSelectDate={onSelectDate}
             givenClassName={'date-input'}
           />
@@ -85,7 +85,7 @@ function SeatSearchFilterPage() {
           <div className='time-picker-pair'>
             <div className='custom-timepicker-wrapper'>
               <DatePicker
-                selected={start}
+                selected={getStart()}
                 onChange={onSelectStart}
                 showTimeSelect
                 showTimeSelectOnly
@@ -103,7 +103,7 @@ function SeatSearchFilterPage() {
 
             <div className='custom-timepicker-wrapper'>
               <DatePicker
-                selected={end}
+                selected={getEnd()}
                 onChange={onSelectEnd}
                 showTimeSelect
                 showTimeSelectOnly
