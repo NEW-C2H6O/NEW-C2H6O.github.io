@@ -39,17 +39,15 @@ function App() {
       <AppBar />
       <Routes>
         <Route path="/error" element={<ErrorPage />} />
-        <Route element={<PrivateRoute />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/my" element={<MyPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/my" element={<MyPage />} />
+        <Route path="/my/code-input" element={<CodeInputPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/reservation-history" element={<ReservationHistoryPage />} />
+          <Route path="/reservation" element={<ReservationPage />} />
+          <Route path="/seat-search" element={<SeatSearchPage />} />
+          <Route path="/seat-search-filter" element={<SeatSearchFilterPage />} />
           <Route path="/my/code-input" element={<CodeInputPage />} />
-          <Route element={<ProtectedRoute />}>
-            <Route path="/reservation-history" element={<ReservationHistoryPage />} />
-            <Route path="/reservation" element={<ReservationPage />} />
-            <Route path="/seat-search" element={<SeatSearchPage />} />
-            <Route path="/seat-search-filter" element={<SeatSearchFilterPage />} />
-            <Route path="/my/code-input" element={<CodeInputPage />} />
-          </Route>
         </Route>
         <Route path={"*"} element={<NotFoundPage />} />
       </Routes>
