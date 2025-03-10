@@ -34,7 +34,7 @@ function InputTime() {
                   ? "#D9D9D9"
                   : stTimeIdx && stTimeIdx <= i * 6 + j && i * 6 + j <= edTimeIdx
                   ? "#017050"
-                  : "#ffffff";
+                  : "#fdfdfd";
                 return (
                   <div
                     key={i * 6 + j}

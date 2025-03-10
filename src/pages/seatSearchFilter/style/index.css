@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
 
-  background-color: #f5f6f8;
+  background-color: #f9f9f9;
   font-family: Arial, sans-serif;
 }
 
@@ -22,12 +22,11 @@
   padding: 10px;
   padding-left: calc(10px + 27px);
   padding-right: calc(10px + 27px);
-
   box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .date-input {
@@ -38,10 +37,10 @@
 
   border: none;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #fdfdfd;
 
   color: black;
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .time-picker-pair {
@@ -56,49 +55,54 @@
 }
 
 .custom-timepicker {
+  width: 100%;
   padding: 10px;
   box-sizing: border-box;
 
-  background-color: #f9f9f9;
+  background-color: #fdfdfd;
   border: none;
   border-radius: 8px;
 
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .custom-timepicker .react-datepicker__time-container {
   border: 1px solid #ddd;
   border-radius: 8px;
 
-  background-color: #f9f9f9;
+  background-color: #fdfdfd;
 }
 
 .custom-timepicker .react-datepicker__time-list-item {
   border: 1px solid #ddd;
   border-radius: 8px;
 
-  background-color: #f9f9f9;
+  background-color: #fdfdfd;
 }
 
 .grouped-dropdown {
-  border: none;
+  font-size: 1rem;
+}
+
+.grouped-dropdown div {
   border-radius: 8px;
 
-  font-size: 14px;
+  background-color: #fdfdfd;
 }
 
 .navigation-button {
+  width: 70%;
+
   padding: 10px;
-  padding-left: 12px;
-  padding-right: 12px;
-  margin-top: 100px;
+  margin-top: 20%;
 
   background-color: #017050;
   color: #f9f9f9;
 
   border: 1px solid #dddddd;
-  border-radius: 8px;
+  border-radius: 12px;
 
-  font-weight: 500;
+  font-size: 1.25rem;
+  font-weight: bold;
   font-stretch: 200%;
 }

@@ -82,7 +82,7 @@ function MyPage() {
       </section>
 
       <footer className={styles.footer}>
-        <p>Copyright 어쩌구</p>
+        <p>Copyright team. NEW-C2H6O</p>
       </footer>
     </div>
   );
