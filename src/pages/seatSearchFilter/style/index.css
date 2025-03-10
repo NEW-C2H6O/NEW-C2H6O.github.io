@@ -82,15 +82,13 @@
 }
 
 .grouped-dropdown {
-  border: none;
-  border-radius: 8px;
-
   font-size: 1rem;
 }
 
 .grouped-dropdown div {
-  background-color: #fdfdfd;
+  border-radius: 8px;
 
+  background-color: #fdfdfd;
 }
 
 .navigation-button {
