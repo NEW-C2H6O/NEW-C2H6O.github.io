@@ -16,6 +16,8 @@ const useMemberStore = create((set, get) => ({
     set({ member });
     return true;
   },
+
+  clear: () => set({ undefined }),
 }));
 
 export { useMemberStore };
