@@ -19,7 +19,7 @@
   height: 40px;
 
   border-radius: 8px;
-  background-color: #ffffff;
+  background-color: #fdfdfd;
 
   font-size: 1rem;
   box-sizing: border-box;
@@ -35,7 +35,7 @@
   height: 300px;
 
   border-radius: 8px;
-  background-color: #ffffff;
+  background-color: #fdfdfd;
   padding: 10px;
 
   display: flex;

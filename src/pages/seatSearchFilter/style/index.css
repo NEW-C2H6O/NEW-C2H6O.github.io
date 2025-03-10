@@ -38,10 +38,10 @@
 
   border: none;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #fdfdfd;
 
   color: black;
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .time-picker-pair {
@@ -56,35 +56,41 @@
 }
 
 .custom-timepicker {
+  width: 100%;
   padding: 10px;
   box-sizing: border-box;
 
-  background-color: #f9f9f9;
+  background-color: #fdfdfd;
   border: none;
   border-radius: 8px;
 
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .custom-timepicker .react-datepicker__time-container {
   border: 1px solid #ddd;
   border-radius: 8px;
 
-  background-color: #f9f9f9;
+  background-color: #fdfdfd;
 }
 
 .custom-timepicker .react-datepicker__time-list-item {
   border: 1px solid #ddd;
   border-radius: 8px;
 
-  background-color: #f9f9f9;
+  background-color: #fdfdfd;
 }
 
 .grouped-dropdown {
   border: none;
   border-radius: 8px;
 
-  font-size: 14px;
+  font-size: 1rem;
+}
+
+.grouped-dropdown div {
+  background-color: #fdfdfd;
+
 }
 
 .navigation-button {
