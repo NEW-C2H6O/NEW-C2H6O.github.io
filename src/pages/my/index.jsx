@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { ReactComponent as RightIcon } from "shared/assets/icons/navigate/right.svg";
-import { useReservationHistoryStore } from "features";
+import { useReservationHistoryStore, useFilterStore } from "features";
 
 function MyPage() {
   const [member, setMember] = useState({ name: "", nameAndTag: "" });
@@ -30,6 +30,7 @@ function MyPage() {
     } catch (error) {
       console.error(error);
     }
+    useFilterStore.persist.clearStorage();
     alert("로그아웃 되었습니다.");
     navigate("/");
   };

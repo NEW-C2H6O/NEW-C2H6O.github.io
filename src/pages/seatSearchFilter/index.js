@@ -2,7 +2,7 @@ import './style/index.css';
 import { useState, useEffect } from 'react';
 import { CustomDatePicker } from 'widgets';
 import { GroupedDropdown } from './components/GroupedDropdown';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { useOttOptionStore, useFilterStore } from 'features';
 
@@ -30,22 +30,31 @@ function startIsFasterThanEnd(start, end) {
 }
 
 function SeatSearchFilterPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const { ottInfo, ottOptions, fetchOtts } = useOttOptionStore();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchOtts();
-    setLoading(false);
-  }, []);
+    if (location.pathname === '/seat-search-filter') {
+      fetchOtts();
+      setLoading(false);
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    onSelectOtt(selectedOttOptions);
+  }, [ottInfo])
 
   const {
-    date,
-    start,
-    end,
     selectedOttOptions,
     setDate,
     setStart,
     setEnd,
     setOttOptionAndInfo,
+    getDate,
+    getStart,
+    getEnd,
   } = useFilterStore();
   const onSelectDate = (e) => setDate(e);
   const onSelectStart = (e) => setStart(e);
@@ -53,7 +62,7 @@ function SeatSearchFilterPage() {
   const onSelectOtt = (options) => setOttOptionAndInfo(options, ottInfo);
 
   function onClickNavigationButton() {
-    const message = getAlertMessage(date, start, end, selectedOttOptions);
+    const message = getAlertMessage(getDate(), getStart(), getEnd(), selectedOttOptions);
     if (message != null) {
       alert(message);
       return;
@@ -61,8 +70,6 @@ function SeatSearchFilterPage() {
 
     navigate('/seat-search');
   }
-
-  const navigate = useNavigate();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -74,7 +81,7 @@ function SeatSearchFilterPage() {
         <div className='input-form'>
           <span>날짜 선택</span>
           <CustomDatePicker
-            defaultDate={date}
+            defaultDate={getDate()}
             onSelectDate={onSelectDate}
             givenClassName={'date-input'}
           />
@@ -85,7 +92,7 @@ function SeatSearchFilterPage() {
           <div className='time-picker-pair'>
             <div className='custom-timepicker-wrapper'>
               <DatePicker
-                selected={start}
+                selected={getStart()}
                 onChange={onSelectStart}
                 showTimeSelect
                 showTimeSelectOnly
@@ -103,7 +110,7 @@ function SeatSearchFilterPage() {
 
             <div className='custom-timepicker-wrapper'>
               <DatePicker
-                selected={end}
+                selected={getEnd()}
                 onChange={onSelectEnd}
                 showTimeSelect
                 showTimeSelectOnly

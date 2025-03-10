@@ -52,7 +52,7 @@ function existSeats(seats) {
     return false;
   }
 
-  if (seats.length == 0) {
+  if (seats.length === 0) {
     return false;
   }
 
@@ -60,21 +60,20 @@ function existSeats(seats) {
 }
 
 function SeatSearchPage() {
-  const { start, end, selectedOttInfo } = useFilterStore();
+  const { getStart, getEnd, selectedOttInfo } = useFilterStore();
   const [conditionExist, setConditionExist] = useState(false);
   useEffect(() => {
-    if ((start != null) & (end != null)) {
+    if ((getStart() != null) & (getEnd() != null)) {
       setConditionExist(true);
-      console.log(selectedOttInfo);
     }
   }, []);
 
   const { seats, fetchSeats } = useSeatStore();
   useEffect(() => {
     if (conditionExist) {
-      fetchSeats({ otts: selectedOttInfo, start: start, end: end });
+      fetchSeats({ otts: selectedOttInfo, start: getStart(), end: getEnd() });
     }
-  }, [conditionExist, selectedOttInfo, start, end]);
+  }, [conditionExist]);
 
   const navigate = useNavigate();
 
@@ -82,8 +81,8 @@ function SeatSearchPage() {
     <div className='seat-search-page'>
       <div className='search-section'>
         <SearchButton
-          date={formatDate(start)}
-          time={formatTimePair(start, end)}
+          date={formatDate(getStart())}
+          time={formatTimePair(getStart(), getEnd())}
           ott={formatOtt(selectedOttInfo)}
           onClickButton={() => navigate(-1)}
         />
@@ -96,7 +95,7 @@ function SeatSearchPage() {
           })
         ) : (
           <div className='notFoundGuide'>
-            <img src='images/pictogram/notFoundImage.png' width='50'></img>
+            <img src='images/pictogram/notFoundImage.png' width='50' alt='not found'></img>
             <label>아쉽게도 일치하는 여석이 없습니다.</label>
           </div>
         )}
