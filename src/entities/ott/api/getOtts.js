@@ -1,8 +1,8 @@
-import axios from 'axios';
+import { axiosInstance } from 'entities/axiosInstance';
 
 export const getOtts = async () => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}/ott`, {
+    const response = await axiosInstance.get('/ott', {
       withCredentials: true,
     });
 

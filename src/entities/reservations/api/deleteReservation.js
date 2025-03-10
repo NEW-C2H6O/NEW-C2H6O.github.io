@@ -1,10 +1,9 @@
-import axios from "axios";
+import { axiosInstance } from 'entities/axiosInstance';
 
 const deleteReservation = async (reservationId) => {
-  const API_URL = process.env.REACT_APP_API_URL;
   try {
-    await axios.delete(
-      `${API_URL}/reservations/${reservationId}`, 
+    await axiosInstance.delete(
+      `/reservations/${reservationId}`, 
       { withCredentials: true }
     );
   } catch (error) {

@@ -12,7 +12,10 @@ function PrivateRoute() {
     });
   }, []);
 
-  if (member == null) return <LoadingPage />;
+  if (member === null) {
+    return <LoadingPage />;
+  }
+
   return <Outlet />;
 }
 

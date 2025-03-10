@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import { ReactComponent as RightIcon } from "shared/assets/icons/navigate/right.svg";
-import { useReservationHistoryStore, useFilterStore } from "features";
+import { useReservationHistoryStore, useFilterStore, useMemberStore } from "features";
 
 function MyPage() {
   const [member, setMember] = useState({ name: "", nameAndTag: "" });
@@ -23,6 +23,7 @@ function MyPage() {
     }
   };
 
+  const { clear } = useMemberStore();
   const fetchLogout = async () => {
     const API_URL = process.env.REACT_APP_API_URL;
     try {
@@ -30,9 +31,10 @@ function MyPage() {
     } catch (error) {
       console.error(error);
     }
-    useFilterStore.persist.clearStorage();
+    useFilterStore.persist.clearStorage();    // zustand persist로 영속화한 데이터 제거
+    clear();
     alert("로그아웃 되었습니다.");
-    navigate("/");
+    navigate("/auth");
   };
 
   useEffect(() => {
