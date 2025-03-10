@@ -52,7 +52,7 @@ function existSeats(seats) {
     return false;
   }
 
-  if (seats.length == 0) {
+  if (seats.length === 0) {
     return false;
   }
 
@@ -95,7 +95,7 @@ function SeatSearchPage() {
           })
         ) : (
           <div className='notFoundGuide'>
-            <img src='images/pictogram/notFoundImage.png' width='50'></img>
+            <img src='images/pictogram/notFoundImage.png' width='50' alt='not found'></img>
             <label>아쉽게도 일치하는 여석이 없습니다.</label>
           </div>
         )}

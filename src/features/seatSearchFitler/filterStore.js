@@ -22,36 +22,7 @@ const formatSearchTime = (date, time) => {
   return result;
 };
 
-const formatOptions = (options, otts) => {
-  /*
-  options: [
-    {
-      group: 0,
-      isDisabled: false,
-      label: "웨이브",
-      ott: 2,
-      value: 2_0    // 2번 OTT 모든 Profile
-    }, {
-      group: 3,
-      isDisabled: false,
-      label: "2번",
-      ott: 3,
-      value: 3_10   // 3번 OTT의 ID 10 Profile
-    }
-  ]
-  
-  otts: {
-    name: "웨이브",
-    ottId: 2,
-    profiles: [
-      {
-        name: "1번",
-        profileId: 6,
-      }
-    ]
-  }
-  */
-  
+const formatOptions = (options, otts) => {  
   if (options == null) {
     return [];
   }
@@ -104,7 +75,7 @@ const formatOptions = (options, otts) => {
     });
   }
 
-  const result = formattedOtts.filter((item) => item.profiles.length != 0);
+  const result = formattedOtts.filter((item) => item.profiles.length !== 0);
 
   return result;
 }
@@ -119,7 +90,9 @@ const useFilterStore = create(
       setDate: (date) => set({ date: date == null ? new Date(Date.now()).toISOString() : date.toISOString() }),
       setStart: (start) => set({ start: formatSearchTime(new Date(get().date), start) }),
       setEnd: (end) => set({ end: formatSearchTime(new Date(get().date), end) }),
-      setOttOptionAndInfo: (options, otts) => set({ selectedOttOptions: options == null ? [] : options, selectedOttInfo: formatOptions(options, otts) }),
+      setOttOptionAndInfo: (options, otts) => set(
+        { selectedOttOptions: options == null ? get().selectedOttOptions : options,
+          selectedOttInfo: formatOptions(options, otts) }),
       getDate: () => new Date(get().date),
       getStart: () => new Date(get().start),
       getEnd: () => new Date(get().end),

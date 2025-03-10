@@ -2,7 +2,7 @@ import './style/index.css';
 import { useState, useEffect } from 'react';
 import { CustomDatePicker } from 'widgets';
 import { GroupedDropdown } from './components/GroupedDropdown';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { useOttOptionStore, useFilterStore } from 'features';
 
@@ -30,22 +30,31 @@ function startIsFasterThanEnd(start, end) {
 }
 
 function SeatSearchFilterPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const { ottInfo, ottOptions, fetchOtts } = useOttOptionStore();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchOtts();
-    setLoading(false);
-  }, []);
+    if (location.pathname === '/seat-search-filter') {
+      fetchOtts();
+      setLoading(false);
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    onSelectOtt(selectedOttOptions);
+  }, [ottInfo])
 
   const {
-    getStart,
-    getEnd,
     selectedOttOptions,
     setDate,
     setStart,
     setEnd,
     setOttOptionAndInfo,
-    getDate
+    getDate,
+    getStart,
+    getEnd,
   } = useFilterStore();
   const onSelectDate = (e) => setDate(e);
   const onSelectStart = (e) => setStart(e);
@@ -61,8 +70,6 @@ function SeatSearchFilterPage() {
 
     navigate('/seat-search');
   }
-
-  const navigate = useNavigate();
 
   if (loading) {
     return <div>Loading...</div>;
