@@ -1,9 +1,8 @@
-import axios from 'axios';
+import { axiosInstance } from 'entities/axiosInstance';
 
 export const getSeats = async (otts, start, end) => {
   try {
-    let url = `${process.env.REACT_APP_API_URL}/ott/available?`;
-
+    let url = '/ott/available?';
     url += `start=${start.toISOString().slice(0, 19)}`;
     url += `&end=${end.toISOString().slice(0, 19)}`;
 
@@ -13,7 +12,7 @@ export const getSeats = async (otts, start, end) => {
       }
     }
 
-    const response = await axios.get(url, { withCredentials: true });
+    const response = await axiosInstance.get(url, { withCredentials: true });
 
     return response.data;
   } catch (error) {

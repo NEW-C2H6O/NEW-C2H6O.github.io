@@ -34,11 +34,6 @@ function App() {
       </div>
     );
 
-  window.onunhandledrejection = function (event) {
-    console.error("Unhandled Promise Rejection:", event.reason);
-    window.location.href = "/error"; // 에러 페이지로 이동
-  };
-
   return (
     <div className="App" style={{ height: window.innerHeight }}>
       <AppBar />

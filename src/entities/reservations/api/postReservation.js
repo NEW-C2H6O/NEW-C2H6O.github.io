@@ -1,10 +1,10 @@
-import axios from "axios";
 import { convertDateToString } from "shared";
+import { axiosInstance } from 'entities/axiosInstance';
 
 async function postReservation({ ottId, profileId, startTime, endTime }) {
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/reservations`,
+    const response = await axiosInstance.post(
+      '/reservations',
       {
         ottId,
         profileId,

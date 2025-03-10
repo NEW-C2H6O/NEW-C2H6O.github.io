@@ -1,9 +1,9 @@
-import axios from "axios";
+import { axiosInstance } from 'entities/axiosInstance';
 
 async function getReservationList({ ottId, profileId, date }) {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/ott/${ottId}/${profileId}/reservations?date=${date}`,
+    const response = await axiosInstance.get(
+      `/ott/${ottId}/${profileId}/reservations?date=${date}`,
       {
         withCredentials: true,
       }

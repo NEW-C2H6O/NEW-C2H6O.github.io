@@ -1,6 +1,5 @@
 import { OTT_ID, OTT_PLATFORMS, OTT_PROFILE_ID, SORT_OPTIONS } from "shared";
-
-import axios from "axios";
+import { axiosInstance } from 'entities/axiosInstance';
 
 const getSortParam = (idx) => {
   const sortOption = SORT_OPTIONS[idx];
@@ -54,11 +53,9 @@ const getParams = (filter, date, cursor) => {
 };
 
 const getReservations = async (filter, date, cursor) => {
-  const API_URL = process.env.REACT_APP_API_URL;
-  const url = `${API_URL}/reservations`;
   const params = getParams(filter, date, cursor);
   try {
-    const result = await axios.get(`${url}?${params.toString()}`, { withCredentials: true });
+    const result = await axiosInstance.get(`/reservations?${params.toString()}`, { withCredentials: true });
     return result.data?.data;
   } catch (error) {
     console.error(error);

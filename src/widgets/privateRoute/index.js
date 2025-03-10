@@ -16,10 +16,6 @@ function PrivateRoute() {
     return <LoadingPage />;
   }
 
-  if (member === undefined) {
-    document.location = "/auth";
-  }
-
   return <Outlet />;
 }
 
