@@ -1,14 +1,18 @@
-import { axiosInstance } from 'entities/axiosInstance';
+import { axiosInstance } from "entities/axiosInstance";
+import { getTimeParam } from "shared";
 
 export const getSeats = async (otts, start, end) => {
   try {
-    let url = '/ott/available?';
-    url += `start=${start.toISOString().slice(0, 19)}`;
-    url += `&end=${end.toISOString().slice(0, 19)}`;
+    let url = "/ott/available?";
+
+    console.log(typeof start, end);
+    console.log(start.toISOString(), end.toISOString());
+    url += `start=${getTimeParam(start)}`;
+    url += `&end=${getTimeParam(end)}`;
 
     if (otts.length != 0) {
       for (const ott of otts) {
-        url += `&ott=${ott.id}_${ott.profiles.map((profile) => profile.id).join('-')}`;
+        url += `&ott=${ott.id}_${ott.profiles.map((profile) => profile.id).join("-")}`;
       }
     }
 
@@ -16,6 +20,6 @@ export const getSeats = async (otts, start, end) => {
 
     return response.data;
   } catch (error) {
-    throw new Error('Failed to fetch seats');
+    throw new Error("Failed to fetch seats");
   }
 };
