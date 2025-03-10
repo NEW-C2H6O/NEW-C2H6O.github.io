@@ -83,36 +83,40 @@ function SeatSearchFilterPage() {
         <div className='input-form'>
           <span>시간 선택</span>
           <div className='time-picker-pair'>
-            <DatePicker
-              selected={start}
-              onChange={onSelectStart}
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={10}
-              showTimeCaption={false}
-              use12Hours={false}
-              dateFormat='HH:mm'
-              timeFormat='HH:mm'
-              className='custom-timepicker'
-              placeholderText='시작'
-            />
+            <div className='custom-timepicker-wrapper'>
+              <DatePicker
+                selected={start}
+                onChange={onSelectStart}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={10}
+                showTimeCaption={false}
+                use12Hours={false}
+                dateFormat='HH:mm'
+                timeFormat='HH:mm'
+                className='custom-timepicker'
+                placeholderText='시작'
+              />
+            </div>
 
             <span> - </span>
 
-            <DatePicker
-              selected={end}
-              onChange={onSelectEnd}
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={10}
-              showTimeCaption={false}
-              use12Hours={false}
-              dateFormat='HH:mm'
-              timeFormat='HH:mm'
-              className='custom-timepicker'
-              editable={false}
-              placeholderText='종료'
-            />
+            <div className='custom-timepicker-wrapper'>
+              <DatePicker
+                selected={end}
+                onChange={onSelectEnd}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={10}
+                showTimeCaption={false}
+                use12Hours={false}
+                dateFormat='HH:mm'
+                timeFormat='HH:mm'
+                className='custom-timepicker'
+                editable={false}
+                placeholderText='종료'
+              />
+            </div>
           </div>
         </div>
 
