@@ -6,8 +6,8 @@ const titleMap = {
   "/": "Home",
   "/reservation-history": "장부 조회",
   "/reservation": "예약",
-  "/seat-search": "OTT 검색",
-  "/seat-search-filter": "OTT 검색",
+  "/seat-search": "여석 검색",
+  "/seat-search-filter": "여석 검색",
   "/my": "마이페이지",
   "/my/code-input": "코드 입력",
 };

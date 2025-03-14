@@ -1,21 +1,10 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useEffect } from "react";
-import { useMemberStore } from "features";
-import { LoadingPage } from "pages";
+import { Outlet, Navigate } from "react-router-dom";
 
-function PrivateRoute() {
-  const { member, fetchMember } = useMemberStore();
-  useEffect(() => {
-    fetchMember().then((res) => {
-      if (res) return;
-      document.location = "/auth";
-    });
-  }, []);
-
+function PrivateRoute({ member }) {
   if (member === null) {
-    return <LoadingPage />;
+    return <Navigate to="/auth" replace={true} />;
   }
-
+  
   return <Outlet />;
 }
 
