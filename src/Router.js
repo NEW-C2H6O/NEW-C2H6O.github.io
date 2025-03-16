@@ -23,7 +23,7 @@ function Router() {
 
   useEffect(() => {
     fetchMember();
-  }, [member, fetchMember]);
+  }, []);
 
   // 로그인 하지 않으면 /auth 제외 모든 페이지 접근 불가
   // 로그인을 했을 때 member.isActivated가 false이면 /my를 제외하고 /my/code-input으로 이동
