@@ -12,7 +12,10 @@ const useMemberStore = create((set, get) => ({
 
   fetchMember: async () => {
     const member = await getMe();
-    if (!member) return false;
+    if (!member) {
+      set({ member: undefined });
+      return false;
+    }
     set({ member });
     return true;
   },

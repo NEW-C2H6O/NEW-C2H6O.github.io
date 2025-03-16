@@ -69,7 +69,7 @@ function MyPage() {
           내 예약 내역
           <RightIcon />
         </Link>
-        <Link to="/my/code-input" className={styles.menuItem}>
+        <Link to={member.isActivated ? '#' : '/my/code-input'} className={styles.menuItem}>
           이번 학기 코드 입력
           {!member.isActivated ? <RightIcon /> : <span>인증완료</span>}
         </Link>
