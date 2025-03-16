@@ -7,3 +7,4 @@ export * from "./singleDropDown/index";
 export * from "./bottomSheet/index";
 export * from "./protectedRoute/index"
 export * from "./privateRoute/index";
+export * from "./unprotectedRoute/index";

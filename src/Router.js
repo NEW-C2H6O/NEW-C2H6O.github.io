@@ -12,7 +12,7 @@ import {
   ErrorPage,
   AuthPage,
 } from "./pages/index.js";
-import { ProtectedRoute, PrivateRoute } from "./widgets/index.js";
+import { ProtectedRoute, PrivateRoute, UnprotectedRoute } from "./widgets/index.js";
 
 
 import { useEffect } from "react";
@@ -35,7 +35,9 @@ function Router() {
     <Route path="/auth" element={<AuthPage />} />
     <Route element={<PrivateRoute member={member}/>}>
       <Route path="/my" element={<MyPage />} />
-      <Route path="/my/code-input" element={<CodeInputPage />} />
+      <Route element={<UnprotectedRoute member={member} />} >
+        <Route path="/my/code-input" element={<CodeInputPage />} />
+      </Route>
       <Route element={<ProtectedRoute member={member}/>}>
         <Route path="/reservation-history" element={<ReservationHistoryPage />} />
         <Route path="/reservation" element={<ReservationPage />} />
